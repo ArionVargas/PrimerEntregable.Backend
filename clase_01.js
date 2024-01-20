@@ -53,3 +53,5 @@ console.log(productos.getProducts())
 productos.addProduct("celular", 110000, "", "a3", 2)
 
 console.log(productos.getProducts())
+
+//prueba de git
