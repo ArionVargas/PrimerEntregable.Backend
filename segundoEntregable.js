@@ -1,13 +1,3 @@
-/* const fs = require("fs")
-
-const dirName = "./files"
-const fileName = dirName + "/ejemplo.txt"
-
-console.log ("generando archivo sync con filename:" + fileName)
-
-
-if (!fs.existsSync(dirName)) fs.mkdirSync(dirName)
-fs.writeFileSync(fileName, "Hola Coders, estoy en un archivo!!") */
 
 const fs = require("fs")
 
@@ -40,13 +30,32 @@ class ProductManager {
     }
 
     readProducts = async () => {
-        let respuesta = await fs.promises.readFile(this.patch, "utf-8")
-        return JSON.parse(respuesta)
+
+        try {
+            let respuesta = await fs.promises.readFile(this.patch, "utf-8")
+            return JSON.parse(respuesta)
+        } catch (error) {
+            console.error("Error al leer el archivo de productos:", error)
+            return []
+        }
+
     }
 
     getProducts = async () => {
-        let respuesta2 = await this.readProducts()
-        return console.log(respuesta2)
+
+        try {
+            let respuesta2 = await this.readProducts();
+            if (respuesta2 && Array.isArray(respuesta2)) {
+                console.log(`productos encontrados en ProductManager: ${respuesta2.length}`)
+                return respuesta2
+            } else {
+                console.log("No se pudieron obtener los productos o la respuesta no es un array.")
+                return []
+            }
+        } catch (error) {
+            console.error("Error al obtener los productos:", error)
+            return []
+        }
     }
 
     getProductsById = async (id) => {
@@ -85,7 +94,7 @@ productos.addProduct("producto3", "desciption3", 30, "imagen3", "abc3", 5) */
  */
 /* productos.deleteProductById(2) */
 
-productos.updateProducts({
+/* productos.updateProducts({
     title: "producto3",
     description: "description3",
     price: 25,
@@ -93,5 +102,10 @@ productos.updateProducts({
     code: "abc3",
     stock: 6,
     id: 3
-})
+}) */
 
+/* console.log(ProductManager.getProducts) */
+
+/* productos.getProducts() */
+
+module.exports = ProductManager
