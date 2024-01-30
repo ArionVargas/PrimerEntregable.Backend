@@ -7,7 +7,8 @@ console.log(productManager)
 
 let persistirProducto = async () =>{
     
-    await productManager.addProduct("titulo4", "desciption4", 40, "imagen4", "abc4", 7)
+    await productManager.addProduct("titulo1", "desciption1", 40, "imagen1", "abc1", 7)
+    await productManager.addProduct("titulo2", "desciption2", 50, "imagen2", "abc2", 4)
     let productosTotales = await productManager.getProducts()
 
     if (productosTotales && productosTotales.length !== undefined) {
