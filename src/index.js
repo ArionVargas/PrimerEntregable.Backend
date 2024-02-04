@@ -1,6 +1,6 @@
 
 
-import productos from "./productManager.js"
+/* import productos from "./productManager.js"
 
 let persistirProducto = async () => {
     try {
@@ -16,5 +16,5 @@ let persistirProducto = async () => {
     }
 }
 
-persistirProducto()
+persistirProducto() */
 

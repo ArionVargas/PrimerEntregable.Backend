@@ -1,9 +1,11 @@
 
-import express from "express";
-import productos from "./productManager.js";
 
-const app = express();
-const PORT = 8080;
+import express from "express"
+import { ProductManager, productos } from "./productManager.js"  // Cambiado el nombre de la instancia
+
+const app = express()
+const PORT = 8080
+
 
 app.get("/products", async (req, res) => {
     try {
@@ -16,8 +18,8 @@ app.get("/products", async (req, res) => {
     }
 })
 
-app.get("/product/:id",async (req, res) => {
-    const productId =  parseInt(req.params.id)
+app.get("/products/:id", async (req, res) => {
+    const productId = parseInt(req.params.id)
 
     try {
         const product = await productos.getProductsById(productId)
@@ -34,5 +36,5 @@ app.get("/product/:id",async (req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log(`Servidor en ejecución en el puerto ${PORT}`);
+    console.log(`Servidor en ejecución en el puerto ${PORT}`)
 })
