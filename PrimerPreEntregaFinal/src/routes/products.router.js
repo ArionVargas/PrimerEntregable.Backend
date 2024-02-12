@@ -26,7 +26,7 @@ productsRouter.get("/:pid", async (req, res) => {
 
     try {
         const { pid } = req.params
-        const products = productManager.getProductsById(pid)
+        const products = await productManager.getProductsById(pid)
         res.json(products)
 
     } catch (error) {
@@ -48,11 +48,11 @@ productsRouter.post("/", async (req, res) => {
 
 })
 
-productsRouter.put("/:pid",async (req,res)=>{
-    const {pid} = req.params
+productsRouter.put("/:pid", async (req, res) => {
+    const { pid } = req.params
     try {
         const { title, description, price, img, code, stock, status, category } = req.body
-        const response = await productManager.updateProducts(id,{ title, description, price, img, code, stock, status, category })
+        const response = await productManager.updateProducts(pid, { title, description, price, img, code, stock, status, category })
         res.json(response)
     } catch (error) {
         console.log(error)
@@ -64,7 +64,7 @@ productsRouter.delete("/:pid", async (req, res) => {
     const { pid } = req.params
 
     try {
-        await productManager.deleteProductById(id)
+        await productManager.deleteProductById(pid)
         res.send(`Producto con ${pid} a sido eliminado con exito`)
     } catch (error) {
         console.log(error)

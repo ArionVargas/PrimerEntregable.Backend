@@ -44,7 +44,7 @@ export class ProductManager {
     }
 
     getProductsById = async (id) => {
-        const response = this.getProducts()
+        const response = await this.getProducts()
         const product = response.find(product => product.id === id)
 
         if (product) {
@@ -54,13 +54,14 @@ export class ProductManager {
         }
     }
 
-    updateProducts = async ( id, {...producto} ) => {
-        const response = this.getProducts()
+    updateProducts = async (id, { ...producto }) => {
+        const response = await this.getProducts()
         const index = response.findIndex(product => product.id === id)
 
         if (index != -1) {
             response[index] = { id, ...producto }
-            await fs.readFile(this.path, JSON.stringify(response))
+            await fs.writeFile(this.path, JSON.stringify(response))
+            /* await fs.readFile(this.path, JSON.stringify(response)) */
             return response[index]
         } else {
             console.log("Producto no encontrado")
@@ -69,14 +70,14 @@ export class ProductManager {
     }
 
     deleteProductById = async (id) => {
-        const products = this.getProducts()
+        const products = await this.getProducts()
         const index = products.findIndex(product => product.id === id)
-   if (index != -1){
-    products.splice(index,1)
-    await fs.writeFile(this.path,JSON.stringify(products))
-   }else{
-    console.log("No se pudo eliminar el producto")
-   }
+        if (index != -1) {
+            products.splice(index, 1)
+            await fs.writeFile(this.path, JSON.stringify(products))
+        } else {
+            console.log("No se pudo eliminar el producto")
+        }
     }
 
 
