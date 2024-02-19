@@ -83,12 +83,3 @@ export class ProductManager {
 
 }
 
-
-
-/* await this.addProduct("producto1", "desciption1", 10, "imagen1", "abc1", 4)
-        await this.addProduct("producto2", "desciption2", 20, "imagen2", "abc2", 5)
-        await this.addProduct("producto3", "desciption3", 30, "imagen3", "abc3", 5)
-        await this.addProduct("producto4", "desciption4", 40, "imagen4", "abc4", 5)
-        await this.addProduct("producto5", "desciption5", 50, "imagen5", "abc5", 5)
-        await this.addProduct("producto6", "desciption6", 60, "imagen6", "abc6", 5)
-        await this.addProduct("producto7", "desciption7", 70, "imagen7", "abc7", 5) */

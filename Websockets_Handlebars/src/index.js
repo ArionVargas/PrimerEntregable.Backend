@@ -5,6 +5,8 @@ import { cartsRouter } from "./routes/carts.router.js"
 import { CartManager } from "./cartManager.js"
 import __dirname from "../utils.js"
 import handlebars from "express-handlebars"
+import viewRouter from "./routes/views.router.js"
+
 
 const PORT = 8080
 const app = express()
@@ -20,15 +22,16 @@ app.engine("handlebars", handlebars.engine())
 app.set("view engine", "handlebars")
 app.set("views", __dirname + "/src/views")
 
-app.get("/hello", (req,res) =>{
 
-    let test = {
-        name: `arion`,
-        last_name: `vargas`,
-        age: 31
-    }
-    res.render("hello",test)
-})
+/* app.get("/hello", (req,res) =>{
+
+   const random = Math.floor(Math.random() * users.length)
+   const user = users[random]
+    
+    res.render("hello", user)
+}) */
+
+app.use("/api/hbs",viewRouter )
 
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartsRouter)
