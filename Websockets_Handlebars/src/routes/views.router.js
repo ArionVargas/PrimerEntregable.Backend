@@ -4,15 +4,18 @@ import { productManager } from "../index.js"
 const router = express.Router()
 
 
-router.get("/admin", async (req ,res )=>{
+router.get("/", async (req ,res )=>{
 
     const products = await productManager.getProducts()
-    console.log("Productos recibidos:", products)
 
-
-    res.render("index",{
+    res.render("home",{
         products
     })
+})
+
+router.get("/realtimeproducts", async (req, res )=>{
+    const products = await productManager.getProducts()
+    res.render("home",{products})
 })
 
 

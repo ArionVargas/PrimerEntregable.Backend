@@ -61,7 +61,6 @@ export class ProductManager {
         if (index != -1) {
             response[index] = { id, ...producto }
             await fs.writeFile(this.path, JSON.stringify(response))
-            /* await fs.readFile(this.path, JSON.stringify(response)) */
             return response[index]
         } else {
             console.log("Producto no encontrado")
