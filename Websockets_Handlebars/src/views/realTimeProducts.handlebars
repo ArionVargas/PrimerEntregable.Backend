@@ -18,7 +18,7 @@
             </div>
             <div class="mb-3">
                 <label for="img" class="form-label">Imagen (URL):</label>
-                <input type="text" class="form-control" id="img" name="img" placeholder="">
+                <input type="url" class="form-control" id="img" name="img" placeholder="">
             </div>
             <div class="mb-3">
                 <label for="code" class="form-label">Código:</label>
@@ -42,16 +42,14 @@
             <button type="submit" class="btn btn-primary">Enviar</button>
 
         </form>
-            <div class="container containerFormEliminar">
-                <h2>Eliminar Producto</h2>
-                <form>
-                    <div class="mb-3">
-                        <label for="productID" class="form-label">ID del Producto:</label>
-                        <input type="text" class="form-control" id="productID" name="productID" required>
-                    </div>
-                    <button type="button" id="delete-btn" class="btn btn-danger" onclick="eliminarProducto()">Eliminar Producto</button>
-                </form>
+        <div class="container containerFormEliminar">
+            <h2>Eliminar Producto</h2>
+            <div class="mb-3">
+                <label for="productID" class="form-label">ID del Producto:</label>
+                <input type="text" class="form-control" id="productID" name="productID" required>
             </div>
+            <button type="button" class="btn btn-danger" id="delete-btn">Eliminar Producto</button>
+        </div>
     </div>
 </div>
 <div class="row mt-4" id="list-products">

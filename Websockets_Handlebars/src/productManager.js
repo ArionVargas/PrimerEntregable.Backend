@@ -75,8 +75,9 @@ export class ProductManager {
             products.splice(index, 1)
             await fs.writeFile(this.path, JSON.stringify(products))
         } else {
-            console.log("No se pudo eliminar el producto")
+            console.log("No se pudo eliminar el producto con ID:" + id)
         }
+
     }
 
 

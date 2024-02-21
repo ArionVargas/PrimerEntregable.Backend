@@ -1,5 +1,5 @@
 
-import { ProductManager } from "../productManager.js"
+import  {ProductManager}  from "../productManager.js"
 import __dirname from "../../utils.js"
 
 
@@ -9,6 +9,7 @@ const socketProducts = (socketServer) => {
     socketServer.on("connection", async (socket) => {
         console.log("client connected with ID:", socket.id)
         const listProducts = await pm.getProducts()
+
         socketServer.emit("sendProducts", listProducts)
 
         socket.on("addProduct", async (obj) => {

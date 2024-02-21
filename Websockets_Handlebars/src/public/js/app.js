@@ -23,13 +23,13 @@ function updateProductList(productList) {
           <h5 class="card-title">Título del Producto ${product.title}</h5>
           <p class="card-text">ID: ${product.id}</p>
           <p class="card-text">Precio: ${product.price}</p>
-          <p class="card-text">Imagen(URL): ${product.img}</p>>
+          <p class="card-text">Imagen(URL): ${product.img}</p>
           <p>Código: ${product.code}</p>
           <p>Estado: ${product.status}</p>
           <p>Stock: ${product.stock} unidades</p>
           <p>Categoría: ${product.category}</p>
         </div>
-        <div class="btn btn-primary" onclick="deleteProduct(${product.id})">ELIMINAR</div>
+        <button class="btn btn-primary" type="button" onclick="deleteProduct('${product.id}')">ELIMINAR</button>
       </div>
     </div>
   `
@@ -51,7 +51,7 @@ form.addEventListener("submit", (evt) => {
   let title = form.elements.title.value
   let description = form.elements.description.value
   let price = form.elements.price.value
-  let img = form.elemnts.img.value
+  let img = form.elements.img.value
   let code = form.elements.code.value
   let stock = form.elements.stock.value
   let status = form.elements.status.value
@@ -74,9 +74,10 @@ form.addEventListener("submit", (evt) => {
 
 document.getElementById("delete-btn").addEventListener("click", function () {
   const deleteIdInput = document.getElementById("productID")
-  const deletedId = parseInt(deleteIdInput.value)
-  socket.emit("deleteProduct", deletedId)
+  const deleteId = deleteIdInput.value
+  socket.emit("deleteProduct", deleteId)
   deleteIdInput.value = ""
+  
 })
 
 function deleteProduct(productId) {
