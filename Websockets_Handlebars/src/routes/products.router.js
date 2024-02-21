@@ -1,11 +1,13 @@
 import { Router } from "express"
 import { productManager } from "../index.js"
-
+/* import {__dirname } from "../../utils.js" */
+import { ProductManager } from "../productManager.js"
 
 const productsRouter = Router()
 
-
-
+/* const manager = new ProductManager(__dirname + "/src/products.json") */
+/* const manager = new productManager(__dirname + "/src/products.json")
+ */
 productsRouter.get("/", async (req, res) => {
     
     try {

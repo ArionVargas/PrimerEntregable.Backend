@@ -7,6 +7,7 @@ import __dirname from "../utils.js"
 import handlebars from "express-handlebars"
 import viewRouter from "./routes/views.router.js"
 import { Server } from "socket.io"
+import socketProducts from "./listeners/socketProducts.js"
 
 const PORT = 8080
 const app = express()
@@ -23,7 +24,7 @@ app.set("view engine", "handlebars")
 app.set("views", __dirname + "/src/views")
 
 
-/* app.use("/api/hbs", viewRouter) */
+app.use("/api/hbs", viewRouter)
 app.use("/", viewRouter)
 
 /* app.use("/api/products", productsRouter)
@@ -35,7 +36,9 @@ const httpServer = app.listen(PORT, (req, res) => {
 
 const socketServer = new Server(httpServer)
 
-socketServer.on("connection", async (socket) => {
+socketProducts(socketServer)
+
+/* socketServer.on("connection", async (socket) => {
     const products = await productManager.getProducts()
 
 
@@ -44,4 +47,4 @@ socketServer.on("connection", async (socket) => {
     })
 
     socket.emit("products", products)
-})
+}) */

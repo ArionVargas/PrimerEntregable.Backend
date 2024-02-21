@@ -1,44 +1,28 @@
+.card-custom {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
 
-form {
-    width: 300px;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-}
-label {
-    display: block;
-    margin-bottom: 5px;
-}
+  .card-custom .card-header {
+    background: none;
+    border: none;
+    font-weight: bold;
+    font-size: 24px;
+    color: #333333;
+  }
 
+  .card-custom .card-body {
+    color: #666666;
+  }
 
-input[type="text"],
-input[type="number"],
-textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; 
-}
+  .card-custom .card-footer {
+    background: none;
+    border: none;
+    color: #999999;
+  }
 
-
-button[type="submit"] {
-    background-color: #4CAF50; /* Color de fondo */
-    color: white; /* Color del texto */
-    padding: 10px 20px; /* Espaciado interior */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Borde redondeado */
-    cursor: pointer; /* Cursor de apuntar */
-}
-
-/* Estilos para el botón de enviar al pasar el mouse */
-button[type="submit"]:hover {
-    background-color: #0a630e;
-}
-
-/* Estilos para los mensajes de error */
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-}
+  .containerFormEliminar{
+    width: 350px;
+  }
