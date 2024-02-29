@@ -1,0 +1,11 @@
+[
+    {
+        "id": "c7a05f9d-ac93-431e-9844-5421caf70bdb",
+        "products": [
+            {
+                "product_id": "producto1prueba",
+                "quantity": 3
+            }
+        ]
+    }
+]
