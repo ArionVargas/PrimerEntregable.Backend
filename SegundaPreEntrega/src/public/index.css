@@ -1,0 +1,28 @@
+.card-custom {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  .card-custom .card-header {
+    background: none;
+    border: none;
+    font-weight: bold;
+    font-size: 24px;
+    color: #333333;
+  }
+
+  .card-custom .card-body {
+    color: #666666;
+  }
+
+  .card-custom .card-footer {
+    background: none;
+    border: none;
+    color: #999999;
+  }
+
+  .containerFormEliminar{
+    width: 350px;
+  }
