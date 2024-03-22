@@ -1,0 +1,40 @@
+{{#if isValid}}
+<div class="container mt-6">
+    {{#each docs}}
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+        <div class="card card-custom">
+          <div class="card-header">Producto </div>
+          <div class="card-body">
+        <p class="card-title">Titulo: {{this.title}}</p>
+        <p>Descripcion: {{this.description}}</p>
+        <p class="card-text" >Precio: {{this.price}}</p>
+        <p>{{this.img}}</p>
+        <p>Stock: {{this.stock}}</p>
+        <p>Categoria: {{this.category}}</p>
+        <a href="#" class="btn btn-primary">Agregar al carrito</a>
+        </div>
+        </div>
+        </div>
+        </div>
+    </div>
+    <br/>
+    {{/each}}
+</div>
+<br/>
+<div>
+    {{#if hasPrevPage}}
+    <a href={{this.prevLink}}>
+        <= Anterior</a>
+        {{/if}}
+        &nbsp;
+        {{this.page}}
+        &nbsp;
+        {{#if hasNextPage}}
+        <a href={{this.nextLink}}>
+            Siguiente =></a>
+        {{/if}}
+</div>
+{{else}}
+<h1>Pagina no corresponde</h1>
+{{/if}}
