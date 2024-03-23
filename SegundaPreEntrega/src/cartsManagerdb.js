@@ -5,7 +5,7 @@ import cartsModel from './models/carts.model.js'
 class CartManager {
     constructor() {
         // Conexión a MongoDB
-        mongoose.connect('mongodb+srv://arionvargas07:YmcnUi3N3c5JyqAh@cluster2.nzze0xu.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster2', { useNewUrlParser: true, useUnifiedTopology: true })
+        mongoose.connect('mongodb+srv://arionvargas07:YmcnUi3N3c5JyqAh@cluster2.nzze0xu.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster2')
             .then(() => console.log('Conexión exitosa a MongoDB'))
             .catch(err => console.error('Error al conectar a MongoDB:', err))
     }

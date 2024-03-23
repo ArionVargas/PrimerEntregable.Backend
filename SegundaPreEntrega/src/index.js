@@ -11,6 +11,9 @@ import socketProducts from "./listeners/socketProducts.js"
 import mongoose from "mongoose"
 import usersRouter from "./routes/users.router.js"
 import productsdbRouter from "./routes/productsdb.router.js"
+import cartsdbRouter from "./routes/cartsdb.router.js"
+import { register } from "./controllers/auth.controllers.js"
+
 
 const PORT = 8080
 const app = express()
@@ -38,6 +41,9 @@ app.use("/api/carts", cartsRouter)
 //MongoDB
 app.use('/api/users',usersRouter)
 app.use('/api/productsdb', productsdbRouter)
+app.use("/api/carts", cartsdbRouter)
+
+app.post("/api/register", register)
 
 const httpServer = app.listen(PORT, (req, res) => {
     console.log(`Server run on port: ${PORT}`)

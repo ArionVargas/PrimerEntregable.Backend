@@ -14,16 +14,26 @@ productsdbRouter.get('/', async (req, res) => {
     result.nextLink = result.hasNextPage ? `http://localhost:8080/api/productsdb?page=${result.nextPage}` : ''
 
     result.isValid = !(page < 1 || page > result.totalPages)
-    /* try {
-        let products = await productsModel.find()
-        res.send({ result: 'success', payload: products })
-
-    } catch (error) {
-        console.error("Failed to get users" + error)
-        res.status(500).send("Error interno del servidor")
-    } */
 
     res.render('productsdb',result)
+})
+
+
+//GET de detalle producto   
+
+productsdbRouter.get('/:id', async (req, res) => {
+    try {
+        const productId = req.params.id
+        const product = await productsModel.findById(productId)
+        if (!product) {
+            return res.status(404).send('Producto no encontrado')
+        }
+      
+        res.render('productDetail', { product })
+    } catch (error) {
+        console.error('Error al obtener detalles del producto:', error)
+        res.status(500).send('Error interno del servidor');
+    }
 })
 
 export default productsdbRouter

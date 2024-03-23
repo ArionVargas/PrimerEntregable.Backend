@@ -5,12 +5,13 @@ import mongoose from "mongoose"
 const userCollection = 'usuarios'
 
 const userSchema = new mongoose.Schema({
-    name: String,
-    last_name: String,
-    email: {type: String,unique: true},
-    age:Number,
+    username: String,
+    email: String,
     password: String,
-    rol: String,
+    cart: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'cartsModel'
+    }
 })
 
 const userModel = mongoose.model(userCollection, userSchema)
