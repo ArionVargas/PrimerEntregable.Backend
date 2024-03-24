@@ -3,13 +3,13 @@
         <div class="col-md-8">
             <div class="card card-custom">
                 <div class="card-header">
-                    <h3 class="card-title">{{ product.title }}</h3>
+                    <h3 class="card-title">{{ this.title }}</h3>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">Descripción: {{ product.description }}</p>
-                    <p class="card-text">Precio: {{ product.price }}</p>
-                    <p class="card-text">Stock: {{ product.stock }}</p>
-                    <p class="card-text">Categoría: {{ product.category }}</p>
+                    <p class="card-text">Descripción: {{ description }}</p>
+                    <p class="card-text">Precio: {{ price }}</p>
+                    <p class="card-text">Stock: {{ stock }}</p>
+                    <p class="card-text">Categoría: {{ category }}</p>
                     <!-- Agregar al carrito -->
                     <form action="/api/carts/add-product" method="POST">
                         <input type="hidden" name="product_id" value="{{ product._id }}">

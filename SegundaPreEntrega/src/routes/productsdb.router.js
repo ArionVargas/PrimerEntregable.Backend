@@ -6,16 +6,43 @@ const productsdbRouter = Router()
 //GET
 
 productsdbRouter.get('/', async (req, res) => {
-    let page = parseInt(req.query.page)
-    if (!page) page = 1
-    let result = await productsModel.paginate({}, { page, limit: 10, lean: true })
+    try {
+        let { page = 1, limit = 10, sort } = req.query
+        page = parseInt(page)
+        limit = parseInt(limit)
 
-    result.prevLink = result.hasPrevPage ? `http://localhost:8080/api/productsdb?page=${result.prevPage}` : ''
-    result.nextLink = result.hasNextPage ? `http://localhost:8080/api/productsdb?page=${result.nextPage}` : ''
+        const options = {
+            page,
+            limit,
+            sort: sort ? { [sort]: 1 } : null, 
+            lean: true
+        }
 
-    result.isValid = !(page < 1 || page > result.totalPages)
+        const result = await productsModel.paginate({}, options);
+        
+        result.prevLink = result.hasPrevPage ? `http://localhost:8080/api/productsdb?page=${result.prevPage}` : ''
+        result.nextLink = result.hasNextPage ? `http://localhost:8080/api/productsdb?page=${result.nextPage}` : ''
 
-    res.render('productsdb',result)
+        result.isValid = !(page < 1 || page > result.totalPages)
+
+        res.render('productsdb',result)
+    } catch (error) {
+        console.error('Error al obtener productos:', error)
+        res.status(500).send('Error interno del servidor')
+    }
+})
+
+
+//POST 
+
+productsdbRouter.post("/", async (req, res) => {
+    try {
+        const newProduct = await productsModel.create(req.body);
+        res.status(201).json(newProduct);
+    } catch (error) {
+        console.error("Error al crear un nuevo producto:", error);
+        res.status(500).send("Error interno del servidor");
+    }
 })
 
 
@@ -28,12 +55,42 @@ productsdbRouter.get('/:id', async (req, res) => {
         if (!product) {
             return res.status(404).send('Producto no encontrado')
         }
-      
-        res.render('productDetail', { product })
+
+        res.render('productDetail',  product )
     } catch (error) {
         console.error('Error al obtener detalles del producto:', error)
         res.status(500).send('Error interno del servidor');
     }
 })
+
+// PUT
+productsdbRouter.put("/:id", async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const updatedProduct = await productsModel.findByIdAndUpdate(productId, req.body, { new: true });
+        if (!updatedProduct) {
+            return res.status(404).send("Producto no encontrado");
+        }
+        res.json(updatedProduct);
+    } catch (error) {
+        console.error("Error al actualizar el producto:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+});
+
+// DELETE
+productsdbRouter.delete("/:id", async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const deletedProduct = await productsModel.findByIdAndDelete(productId);
+        if (!deletedProduct) {
+            return res.status(404).send("Producto no encontrado");
+        }
+        res.json(deletedProduct);
+    } catch (error) {
+        console.error("Error al eliminar el producto:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+});
 
 export default productsdbRouter
