@@ -2,15 +2,22 @@ import mongoose from "mongoose"
 
 
 
-const userCollection = 'usuarios'
+const userCollection = 'users'
 
 const userSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
-    cart: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'cartsModel'
+    carts: {
+        type: [
+            {
+                cart: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'carts'
+                }
+
+            }
+        ], default:[]
     }
 })
 

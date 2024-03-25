@@ -63,6 +63,10 @@ const connectMongoDB = async () =>{
         console.error('No se pudo conectar a la bd usando MOngoose:'+ error)
         process.exit()
     }
+
+    //populate
+
+    
 }
 
 connectMongoDB()
