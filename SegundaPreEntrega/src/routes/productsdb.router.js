@@ -18,7 +18,7 @@ productsdbRouter.get('/', async (req, res) => {
             lean: true
         }
 
-        const result = await productsModel.paginate({}, options);
+        const result = await productsModel.paginate({}, options)
         
         result.prevLink = result.hasPrevPage ? `http://localhost:8080/api/productsdb?page=${result.prevPage}` : ''
         result.nextLink = result.hasNextPage ? `http://localhost:8080/api/productsdb?page=${result.nextPage}` : ''
@@ -37,11 +37,11 @@ productsdbRouter.get('/', async (req, res) => {
 
 productsdbRouter.post("/", async (req, res) => {
     try {
-        const newProduct = await productsModel.create(req.body);
-        res.status(201).json(newProduct);
+        const newProduct = await productsModel.create(req.body)
+        res.status(201).json(newProduct)
     } catch (error) {
-        console.error("Error al crear un nuevo producto:", error);
-        res.status(500).send("Error interno del servidor");
+        console.error("Error al crear un nuevo producto:", error)
+        res.status(500).send("Error interno del servidor")
     }
 })
 
@@ -59,38 +59,38 @@ productsdbRouter.get('/:id', async (req, res) => {
         res.render('productDetail',  product )
     } catch (error) {
         console.error('Error al obtener detalles del producto:', error)
-        res.status(500).send('Error interno del servidor');
+        res.status(500).send('Error interno del servidor')
     }
 })
 
 // PUT
 productsdbRouter.put("/:id", async (req, res) => {
     try {
-        const productId = req.params.id;
-        const updatedProduct = await productsModel.findByIdAndUpdate(productId, req.body, { new: true });
+        const productId = req.params.id
+        const updatedProduct = await productsModel.findByIdAndUpdate(productId, req.body, { new: true })
         if (!updatedProduct) {
-            return res.status(404).send("Producto no encontrado");
+            return res.status(404).send("Producto no encontrado")
         }
-        res.json(updatedProduct);
+        res.json(updatedProduct)
     } catch (error) {
-        console.error("Error al actualizar el producto:", error);
-        res.status(500).send("Error interno del servidor");
+        console.error("Error al actualizar el producto:", error)
+        res.status(500).send("Error interno del servidor")
     }
-});
+})
 
 // DELETE
 productsdbRouter.delete("/:id", async (req, res) => {
     try {
-        const productId = req.params.id;
-        const deletedProduct = await productsModel.findByIdAndDelete(productId);
+        const productId = req.params.id
+        const deletedProduct = await productsModel.findByIdAndDelete(productId)
         if (!deletedProduct) {
-            return res.status(404).send("Producto no encontrado");
+            return res.status(404).send("Producto no encontrado")
         }
-        res.json(deletedProduct);
+        res.json(deletedProduct)
     } catch (error) {
-        console.error("Error al eliminar el producto:", error);
-        res.status(500).send("Error interno del servidor");
+        console.error("Error al eliminar el producto:", error)
+        res.status(500).send("Error interno del servidor")
     }
-});
+})
 
 export default productsdbRouter

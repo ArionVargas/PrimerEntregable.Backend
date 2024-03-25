@@ -35,11 +35,24 @@ cartsdbRouter.post('/', async (req, res) => {
 })
 
 // Añadir un producto a un carrito
-cartsdbRouter.post('/add-product', async (req, res) => {
+
+cartsdbRouter.post('/:cartId/add-product', async (req, res) => {
   try {
-    const { cart_id, product_id } = req.body
-    await cartManager.addProductCart(cart_id, product_id)
-    res.json({ message: 'Producto agregado al carrito con éxito' })
+    const { product_id } = req.body;
+    const { cartId } = req.params;
+    await cartManager.addProductCart(cartId, product_id);
+    res.json({ message: 'Producto agregado al carrito con éxito' });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+})
+
+//Eliminar producto del carrito por ID
+cartsdbRouter.delete('/:cid/products/:pid', async (req, res) => {
+  try {
+    const { cid, pid } = req.params
+    await cartManager.deleteProductFromCart(cid, pid)
+    res.json({ message: 'Producto eliminado del carrito con éxito' })
   } catch (err) {
     res.status(400).json({ message: err.message })
   }

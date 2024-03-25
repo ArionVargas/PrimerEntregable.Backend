@@ -1,10 +1,10 @@
 {{#if isValid}}
 <div class="container mt-6">
-    {{#each docs}}
     <div class="row justify-content-center">
+        {{#each docs}}
         <div class="col-md-4 mb-4">
             <div class="card card-custom">
-                <div class="card-header">Producto </div>
+                <div class="card-header">Producto</div>
                 <div class="card-body">
                     <p class="card-title">TITULO: {{this.title}}</p>
                     <p class="card-text">Precio: {{this.price}}</p>
@@ -15,19 +15,19 @@
                 </div>
             </div>
         </div>
+        {{/each}}
     </div>
-    {{/each}}
 </div>
 <br/>
 <div>
     {{#if hasPrevPage}}
-    <a href="{{this.prevLink}}"><= Anterior</a>
+    <a class="btn btn-primary" href="{{prevLink}}"><= Anterior</a>
     {{/if}}
     &nbsp;
     {{this.page}}
     &nbsp;
     {{#if hasNextPage}}
-    <a href="{{this.nextLink}}">Siguiente =></a>
+    <a class="btn btn-primary" href="{{nextLink}}">Siguiente =></a>
     {{/if}}
 </div>
 {{else}}

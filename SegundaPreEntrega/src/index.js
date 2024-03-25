@@ -43,7 +43,7 @@ app.use("/api/users",usersRouter)
 app.use("/api/productsdb", productsdbRouter)
 app.use("/api/carts", cartsdbRouter)
 
-app.post("/api/register", register)
+app.use("/api/register", register)
 
 const httpServer = app.listen(PORT, (req, res) => {
     console.log(`Server run on port: ${PORT}`)

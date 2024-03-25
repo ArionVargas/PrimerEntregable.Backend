@@ -57,6 +57,20 @@ class CartManager {
             console.error('Error al agregar el producto al carrito:', err)
         }
     }
+
+    async deleteProductFromCart(cartId, productId) {
+        try {
+          const cart = await cartsModel.findById(cartId)
+          if (!cart) {
+            throw new Error('Carrito no encontrado')
+          }
+          // Filtrar los productos para excluir el producto con el ID especificado
+          cart.products = cart.products.filter(product => product._id !== productId)
+          await cart.save()
+        } catch (err) {
+          throw new Error(`Error al eliminar producto del carrito: ${err.message}`)
+        }
+      }
 }
 
 export default CartManager
