@@ -35,12 +35,12 @@ app.use("/api/hbs", viewRouter)
 app.use("/", viewRouter)
 
 
-app.use("/api/products", productsRouter)
+app.use("/products", productsRouter)
 app.use("/api/carts", cartsRouter)
 
 //MongoDB
 app.use("/api/users",usersRouter)
-app.use("/api/productsdb", productsdbRouter)
+app.use("/api/products", productsdbRouter)
 app.use("/api/carts", cartsdbRouter)
 
 app.use("/api/register", register)
