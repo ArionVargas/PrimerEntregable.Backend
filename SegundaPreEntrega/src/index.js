@@ -13,6 +13,7 @@ import usersRouter from "./routes/users.router.js"
 import productsdbRouter from "./routes/productsdb.router.js"
 import cartsdbRouter from "./routes/cartsdb.router.js"
 import { register } from "./controllers/auth.controllers.js"
+import cartsModel from "./models/carts.model.js"
 
 
 const PORT = 8080
@@ -38,8 +39,10 @@ app.use("/", viewRouter)
 app.use("/products", productsRouter)
 app.use("/api/carts", cartsRouter)
 
+app.use("/massages", router)
+
 //MongoDB
-app.use("/api/users",usersRouter)
+app.use("/api/users", usersRouter)
 app.use("/api/products", productsdbRouter)
 app.use("/api/carts", cartsdbRouter)
 
@@ -55,31 +58,53 @@ socketProducts(socketServer)
 
 const URL_mongo = "mongodb+srv://arionvargas07:YmcnUi3N3c5JyqAh@cluster2.nzze0xu.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster2"
 
-const connectMongoDB = async () =>{
+const connectMongoDB = async () => {
     try {
         mongoose.connect(URL_mongo)
         console.log('conectado correctamente a la db solicitada')
     } catch (error) {
-        console.error('No se pudo conectar a la bd usando MOngoose:'+ error)
+        console.error('No se pudo conectar a la bd usando MOngoose:' + error)
         process.exit()
     }
 
-    //populate
 
-    
+    //populate
+    cartsModel.find().populate("products.product_id")
+
 }
 
 connectMongoDB()
 
 
+const messages = [];
+socketServer.on('connection', socket => {
+    // Esto lo ve cualquier user que se conecte
+    socketServer.emit('messageLogs', messages);
 
-socketServer.on("connection", async (socket) => {
-    const products = await productManager.getProducts()
 
 
-    socket.on("mensaje", products => {
-        console.log("los productos son:" + products)
+    // aqui vamos a recibir { user: user, message: catBox.value }
+    socket.on("message", data => {
+        messages.push(data)
+
+
+        // enviamos un array de objetos ---> [{ user: "Juan", message: "Hola" }, { user: "Elias", message: "Como estas?" }]
+        socketServer.emit('messageLogs', messages);
+    });
+
+
+    // hacemos un broadcast del nuevo usuario que se conecta al chat
+    socket.on('userConnected', data => {
+        console.log(data);
+        socket.broadcast.emit('userConnected', data.user)
     })
 
-    socket.emit("products", products)
+
+    // Cuando desees cerrar la conexión con este cliente en particular:
+    socket.on('closeChat', data => {
+        if (data.close === "close")
+            socket.disconnect();
+    })
+
+
 })

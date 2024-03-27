@@ -27,5 +27,9 @@ router.get("/register", (req, res) => {
     res.render("register"); // Renderizar plantilla de registro
 });
 
+router.get("/massage", (req,res)=>{
+    res.render("massages")
+})
+
 
 export default router

@@ -65,6 +65,15 @@ class CartManager {
           throw new Error(`Error al eliminar producto del carrito: ${err.message}`)
         }
       }
+
+      async getCartWithProducts(id) {
+        try {
+          return await cartsModel.findById(id).populate("products.product_id")
+        } catch (err) {
+          console.error('Error al obtener el carrito con productos:', err)
+          return null
+        }
+      }
 }
 
 export default CartManager

@@ -17,7 +17,7 @@ cartsdbRouter.get('/', async (req, res) => {
 // Obtener un carrito específico por su ID
 cartsdbRouter.get('/:id', async (req, res) => {
   try {
-    const cartProducts = await cartManager.getCartProducts(req.params.id)
+    const cartProducts = await cartManager.getCartWithProducts(req.params.id)
     res.json(cartProducts)
   } catch (err) {
     res.status(500).json({ message: err.message })
