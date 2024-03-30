@@ -1,43 +1,27 @@
 import { Router } from "express"
-import productsModel from "../models/products.model.js"
+import ProductManager from "../productManager.js"
 
+const productManager = new ProductManager()
 const productsdbRouter = Router()
 
-//GET
-
+// GET
 productsdbRouter.get('/', async (req, res) => {
     try {
         let { page = 1, limit = 10, sort } = req.query
-        page = parseInt(page)
-        limit = parseInt(limit)
 
-        const options = {
-            page,
-            limit,
-            sort: sort ? { [sort]: 1 } : null, 
-            lean: true
-        }
+        const result = await productManager.getAllProducts(page,limit,sort)
 
-        const result = await productsModel.paginate({}, options)
-        
-        result.prevLink = result.hasPrevPage ? `http://localhost:8080/api/productsdb?page=${result.prevPage}` : ''
-        result.nextLink = result.hasNextPage ? `http://localhost:8080/api/productsdb?page=${result.nextPage}` : ''
-
-        result.isValid = !(page < 1 || page > result.totalPages)
-
-        res.render('productsdb',result)
+        res.render('productsdb', result)
     } catch (error) {
         console.error('Error al obtener productos:', error)
         res.status(500).send('Error interno del servidor')
     }
 })
 
-
-//POST 
-
+// POST
 productsdbRouter.post("/", async (req, res) => {
     try {
-        const newProduct = await productsModel.create(req.body)
+        const newProduct = await productManager.addProduct(req.body)
         res.status(201).json(newProduct)
     } catch (error) {
         console.error("Error al crear un nuevo producto:", error)
@@ -45,18 +29,16 @@ productsdbRouter.post("/", async (req, res) => {
     }
 })
 
-
-//GET de detalle producto   
-
+// GET de detalle producto por id
 productsdbRouter.get('/:id', async (req, res) => {
     try {
         const productId = req.params.id
-        const product = await productsModel.findById(productId)
+        const product = await productManager.getProductById(productId)
         if (!product) {
             return res.status(404).send('Producto no encontrado')
         }
 
-        res.render('productDetail',  product )
+        res.render('productDetail', product)
     } catch (error) {
         console.error('Error al obtener detalles del producto:', error)
         res.status(500).send('Error interno del servidor')
@@ -67,7 +49,7 @@ productsdbRouter.get('/:id', async (req, res) => {
 productsdbRouter.put("/:id", async (req, res) => {
     try {
         const productId = req.params.id
-        const updatedProduct = await productsModel.findByIdAndUpdate(productId, req.body, { new: true })
+        const updatedProduct = await productManager.updateProduct(productId, req.body)
         if (!updatedProduct) {
             return res.status(404).send("Producto no encontrado")
         }
@@ -82,7 +64,7 @@ productsdbRouter.put("/:id", async (req, res) => {
 productsdbRouter.delete("/:id", async (req, res) => {
     try {
         const productId = req.params.id
-        const deletedProduct = await productsModel.findByIdAndDelete(productId)
+        const deletedProduct = await productManager.deleteProduct(productId)
         if (!deletedProduct) {
             return res.status(404).send("Producto no encontrado")
         }

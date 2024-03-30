@@ -1,5 +1,5 @@
 
-import  {ProductManager}  from "../productManager.js"
+/* import  ProductManager  from "../productManager.js"
 import __dirname from "../../utils.js"
 
 
@@ -28,3 +28,4 @@ const socketProducts = (socketServer) => {
 
 export default socketProducts
 
+ */
