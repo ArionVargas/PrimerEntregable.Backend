@@ -14,7 +14,7 @@ import productsdbRouter from "./routes/productsdb.router.js"
 import cartsdbRouter from "./routes/cartsdb.router.js"
 import { register } from "./controllers/auth.controllers.js"
 import cartsModel from "./models/carts.model.js"
-
+import session from 'express-session'
 
 const PORT = 8080
 const app = express()
@@ -35,11 +35,11 @@ app.set("views", __dirname + "/src/views")
 app.use("/api/hbs", viewRouter)
 app.use("/", viewRouter)
 
-
+//products websokets
 app.use("/products", productsRouter)
 app.use("/api/carts", cartsRouter)
 
-app.use("/massages", router)
+app.use("/massages", viewRouter)
 
 //MongoDB
 app.use("/api/users", usersRouter)
