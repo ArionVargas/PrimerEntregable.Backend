@@ -9,9 +9,10 @@ productsdbRouter.get('/', async (req, res) => {
     try {
         let { page = 1, limit = 10, sort } = req.query
 
+        const username = req.session.user ? req.session.user.username : null
         const result = await productManager.getAllProducts(page,limit,sort)
 
-        res.render('productsdb', result)
+        res.render('productsdb',result/* , {username ,products : result } */)
     } catch (error) {
         console.error('Error al obtener productos:', error)
         res.status(500).send('Error interno del servidor')

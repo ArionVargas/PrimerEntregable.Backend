@@ -1,12 +1,10 @@
 import express from "express"
 import __dirname from "../utils.js"
 import handlebars from "express-handlebars"
-import { Server } from "socket.io"
 import mongoose from "mongoose"
 import usersRouter from "./routes/users.router.js"
 import productsdbRouter from "./routes/productsdb.router.js"
 import cartsdbRouter from "./routes/cartsdb.router.js"
-import { register } from "./controllers/auth.controllers.js"
 import cartsModel from "./models/carts.model.js"
 import session from "express-session"
 import router from './routes/views.router.js'
@@ -47,7 +45,7 @@ app.use("/api/users", usersRouter)
 app.use("/api/products", productsdbRouter)
 app.use("/api/carts", cartsdbRouter)
 
-app.use("/api", router)
+app.use("/", router)
 
 const httpServer = app.listen(PORT, (req, res) => {
     console.log(`Server run on port: ${PORT}`)
