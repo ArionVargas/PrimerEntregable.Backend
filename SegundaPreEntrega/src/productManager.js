@@ -13,8 +13,8 @@ class ProductManager {
             }
             const result = await productsModel.paginate({}, options)
 
-            const prevLink = result.hasPrevPage ? `http://localhost:8080/api/productsdb?page=${result.prevPage}` : ''
-            const nextLink = result.hasNextPage ? `http://localhost:8080/api/productsdb?page=${result.nextPage}` : ''
+            const prevLink = result.hasPrevPage ? `http://localhost:8080/api/products?page=${result.prevPage}` : ''
+            const nextLink = result.hasNextPage ? `http://localhost:8080/api/products?page=${result.nextPage}` : ''
 
             result.prevLink = prevLink
             result.nextLink = nextLink

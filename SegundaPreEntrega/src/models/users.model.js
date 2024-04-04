@@ -5,7 +5,8 @@ import mongoose from "mongoose"
 const userCollection = 'users'
 
 const userSchema = new mongoose.Schema({
-    username: String,
+    firstName: String,
+    lastName:String,
     email: String,
     password: String,
     carts: {

@@ -1,22 +1,22 @@
 import { Router } from "express"
 import userModel from "../models/users.model.js"
-import { signup } from '../controllers/auth.controllers.js'
+/* import { signup } from '../controllers/auth.controllers.js' */
 
 const usersRouter = Router()
 
 //GET
-usersRouter.get('/', async (req, res) => {
+/* usersRouter.get('/', async (req, res) => {
     try {
         let users = await userModel.find()
         res.send({ result: 'success', payload: users })
-       /*  res.render('users',users) */
+      
 
     } catch (error) {
         console.error("Failed to get users" + error)
         res.status(500).send("Error interno del servidor")
     }
 
-})
+}) */
 
 
 //POST
@@ -33,8 +33,8 @@ usersRouter.post('/', async (req, res) => {
 
 })
 
-usersRouter.post('/register', signup)
-
+/* usersRouter.post('/register', signup)
+ */
 //PUT
 
 usersRouter.put('/:id', async (req, res) => {

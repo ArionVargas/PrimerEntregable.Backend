@@ -8,7 +8,7 @@ import cartsdbRouter from "./routes/cartsdb.router.js"
 import cartsModel from "./models/carts.model.js"
 import session from "express-session"
 import router from './routes/views.router.js'
-
+import authRouter from './routes/auth.router.js'
 
 const PORT = 8080
 const app = express()
@@ -44,7 +44,7 @@ app.use(session(
 app.use("/api/users", usersRouter)
 app.use("/api/products", productsdbRouter)
 app.use("/api/carts", cartsdbRouter)
-
+app.use("/api",authRouter)
 app.use("/", router)
 
 const httpServer = app.listen(PORT, (req, res) => {
