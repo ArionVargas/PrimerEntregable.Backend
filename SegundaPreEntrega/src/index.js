@@ -8,12 +8,12 @@ import productsdbRouter from "./routes/productsdb.router.js"
 import cartsdbRouter from "./routes/cartsdb.router.js"
 import { register } from "./controllers/auth.controllers.js"
 import cartsModel from "./models/carts.model.js"
+import session from "express-session"
+import router from './routes/views.router.js'
+
 
 const PORT = 8080
 const app = express()
-
-/* export const productManager = new ProductManager */
-/* export const cartManager = new CartManager */
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -24,13 +24,30 @@ app.engine("handlebars", handlebars.engine())
 app.set("view engine", "handlebars")
 app.set("views", __dirname + "/src/views")
 
+//session
+app.use(session(
+    {
+        secret:'secretCoder',
+
+        //resave permite mantener la sesion activa en caso de que la 
+        //sesion se mantenga inactiva. se deja en false,la sesion 
+        //morira en caso que exista cierto tiempo de inactividad
+        resave:true,
+
+        //saveUninitialized permite guardar calquier sesion aun cuando el objeto
+        //de sesion no tenga nada porcontener. sise deja en false
+        //la sesion no se guardara si el objeto de sesion esta vacio al final de la consulta
+        saveUninitialized:true
+    }
+))
+
 
 //MongoDB
 app.use("/api/users", usersRouter)
 app.use("/api/products", productsdbRouter)
 app.use("/api/carts", cartsdbRouter)
 
-app.use("/api/register", register)
+app.use("/api", router)
 
 const httpServer = app.listen(PORT, (req, res) => {
     console.log(`Server run on port: ${PORT}`)

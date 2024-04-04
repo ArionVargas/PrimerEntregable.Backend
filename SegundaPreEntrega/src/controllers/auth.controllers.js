@@ -1,29 +1,22 @@
-import cartsModel from '../models/carts.model.js'
 import userModel from '../models/users.model.js'
 
-const register = async (req, res) => {
-  try {
-    // Verificar si el usuario ya existe
-    const existingUser = await userModel.findOne({ email: req.body.email })
-    if (existingUser) {
-      return res.status(400).json({ message: 'El correo electrónico ya está registrado' })
+export const signup = async (req, res) => {
+    try {
+        // Extrae los datos del cuerpo de la solicitud
+        const { username, email, password } = req.body
+        // Crea un nuevo usuario en la base de datos utilizando el modelo de usuario
+        const newUser = await userModel.create({ username, email, password })
+        // Envía a pag de login respuesta exitosa
+        res.redirect('/login')
+    } catch (error) {
+        // Maneja errores
+        res.status(500).json({ message: 'Error al registrar usuario' })
     }
-
-    // Crear el usuario
-    const newUser = await userModel.create(req.body)
-    
-    // Crear un carrito para el usuario
-    const newCart = await cartsModel.create({ products: [] })
-    
-    // Asignar el carrito al usuario
-    newUser.cart = newCart._id
-    await newUser.save()
-
-    res.status(201).json({ message: 'Usuario registrado con éxito' })
-  } catch (error) {
-    console.error('Error al registrar usuario:', error)
-    res.status(500).json({ message: 'Error interno del servidor' })
-  }
 }
 
-export { register }
+export const logout = (req, res) => {
+  // Destruye la sesión
+  req.session.destroy();
+  // Redirige al usuario a la pantalla de login
+  res.redirect('/login');
+}

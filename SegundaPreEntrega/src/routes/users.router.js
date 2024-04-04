@@ -1,6 +1,6 @@
 import { Router } from "express"
 import userModel from "../models/users.model.js"
-
+import { register } from '../controllers/auth.controllers.js'
 
 const usersRouter = Router()
 
@@ -32,6 +32,8 @@ usersRouter.post('/', async (req, res) => {
     }
 
 })
+
+usersRouter.post('/register', register)
 
 //PUT
 
