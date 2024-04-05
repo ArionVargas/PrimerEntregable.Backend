@@ -15,14 +15,6 @@ router.get('/session', (req, res) => {
     res.render('session')
 })
 
-/* router.get("/", (req, res) => {
-    if (req.session.user) {
-        res.redirect('/products')
-    } else {
-        res.redirect('/login')
-    }
-}
-) */
 
 
 

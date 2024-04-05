@@ -31,7 +31,7 @@ class CartManager {
             return null
         }
     }
-
+//revisar ///
     async addProductCart(cart_id, product_id) {
         try {
             const cart = await cartsModel.findById(cart_id)

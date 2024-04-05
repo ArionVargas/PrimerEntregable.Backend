@@ -26,15 +26,7 @@ app.set("views", __dirname + "/src/views")
 app.use(session(
     {
         secret:'secretCoder',
-
-        //resave permite mantener la sesion activa en caso de que la 
-        //sesion se mantenga inactiva. se deja en false,la sesion 
-        //morira en caso que exista cierto tiempo de inactividad
         resave:true,
-
-        //saveUninitialized permite guardar calquier sesion aun cuando el objeto
-        //de sesion no tenga nada porcontener. sise deja en false
-        //la sesion no se guardara si el objeto de sesion esta vacio al final de la consulta
         saveUninitialized:true
     }
 ))

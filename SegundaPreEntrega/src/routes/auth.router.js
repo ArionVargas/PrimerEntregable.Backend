@@ -1,13 +1,10 @@
 import express from 'express'
-/* import { login,signup } from '../controllers/auth.controllers.js' */
 import userModel from '../models/users.model.js'
 
 const authRouter = express.Router()
 
 authRouter.post("/register", async (req, res) => {
     const { firstName, lastName, email, password } = req.body
-    console.log("Registrando Usuario");
-    console.log(req.body);
 
     const exists = await userModel.findOne({ email })
     if (exists) {
@@ -17,34 +14,38 @@ authRouter.post("/register", async (req, res) => {
         firstName,
         lastName,
         email,
-        password 
+        password
     }
     const result = await userModel.create(user)
     return res.redirect('/login')
 })
 
 authRouter.post("/login", async (req, res) => {
-    const { email, password } = req.body
-    const user = await userModel.findOne({ email, password }) 
-    if (!user) {
-        return res.redirect('/login')
-    }
+    try {
+        const { email, password } = req.body
+        const user = await userModel.findOne({ email, password })
 
-    if (!password) {
-        return res.redirect('/login')
-    }
+        if (!user) {
+            return res.status(401).send({ status: "error", error: "Incorrect credentials" })
+        }
 
-    req.session.user = {
-        name: `${user.firstName} ${user.lastName}`,
-        email: user.email
-    }
+        req.session.user = {
+            firstName: `${user.firstName}`,
+            email: user.email
+        }
 
-    res.redirect('/products')
+     
+        res.status(200).json({ status: "success", user: req.session.user })
+    } catch (error) {
+        console.error('Error al iniciar sesión', error)
+        res.status(500).json({ success: false, message: 'Error interno del servidor' })
+    }
 })
 
 authRouter.get("/", (req, res) => {
+    /* render('/products') */
     if (req.session.user) {
-        res.redirect('/products',{
+        res.redirect('/api/products', {
             user: req.session.user
         })
     } else {

@@ -1,4 +1,4 @@
-const socket = io()
+/* const socket = io()
 
 socket.on("sendProducts", (obj) => {
   updateProductList(obj)
@@ -84,3 +84,4 @@ function deleteProduct(productId) {
   socket.emit("deleteProduct", productId)
 }
 
+ */

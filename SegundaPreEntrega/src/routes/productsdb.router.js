@@ -8,11 +8,12 @@ const productsdbRouter = Router()
 productsdbRouter.get('/', async (req, res) => {
     try {
         let { page = 1, limit = 10, sort } = req.query
-
-       /*  const username = req.session.user ? req.session.user.username : null */
-        const result = await productManager.getAllProducts(page,limit,sort)
-
-        res.render('productsdb',result)
+        
+        const firstName = req.session.user ? req.session.user.firstName : null
+       
+        const result = await productManager.getAllProducts(page, limit, sort)
+        
+        res.render('productsdb', { user: firstName, products: result.products})
     } catch (error) {
         console.error('Error al obtener productos:', error)
         res.status(500).send('Error interno del servidor')
