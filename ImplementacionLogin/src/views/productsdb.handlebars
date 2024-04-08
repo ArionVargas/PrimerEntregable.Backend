@@ -1,0 +1,41 @@
+<div>
+    <h2>Bienvenido/a {{firstName}}</h2>
+    <form action="/api/logout" method="post">
+        <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
+</div>
+{{#if isValid}}
+<div class="container mt-6">
+    <div class="row justify-content-center">
+        {{#each docs}}
+        <div class="col-md-4 mb-4">
+            <div class="card card-custom">
+                <div class="card-header">Producto</div>
+                <div class="card-body">
+                    <p class="card-title">TITULO: {{this.title}}</p>
+                    <p class="card-text">Precio: {{this.price}}</p>
+                    <p>{{this.img}}</p>
+                    <p>Stock: {{this.stock}}</p>
+                    <p>Categoria: {{this.category}}</p>
+                    <a href="http://localhost:8080/api/products/{{this._id}}" class="btn btn-primary">Ver detalles</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<br/>
+<div>
+    {{#if hasPrevPage}}
+    <a class="btn btn-primary" href="{{prevLink}}"><= Anterior</a>
+    {{/if}}
+    &nbsp;
+    {{this.page}}
+    &nbsp;
+    {{#if hasNextPage}}
+    <a class="btn btn-primary" href="{{nextLink}}">Siguiente =></a>
+    {{/if}}
+</div>
+{{else}}
+<h1>Pagina no corresponde en Productsdb.hand</h1>
+{{/if}}

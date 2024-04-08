@@ -1,0 +1,26 @@
+<div>
+  <h1>PRODUCTOS WEB</h1>
+
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+
+      {{#each products}}
+        <div class="col-md-4 mb-4">
+          <div class="card card-custom">
+            <div class="card-header">Producto </div>
+            <div class="card-body">
+              <h5 class="card-title">Título del Producto {{this.title}}</h5>
+              <p class="card-text">Precio: {{this.price}}</p>
+              <a href="#" class="btn btn-primary">Ver Producto {{this.img}}</a>
+              <p>Código: {{this.code}}</p>
+              <p>Estado: {{this.status}}</p>
+              <p>Stock: {{this.stock}} unidades</p>
+              <p>Categoría: {{this.category}}</p>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+
+</div>
