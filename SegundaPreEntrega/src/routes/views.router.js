@@ -15,6 +15,14 @@ router.get('/session', (req, res) => {
     res.render('session')
 })
 
+router.get('/logout', (req,res)=>{
+    req.session.destroy(error=>{
+        if(error){
+            res.json({error: 'error logout',massage: 'error al cerrar session'})
+        }
+        res.send('session cerrada correctamente')
+    })
+})
 
 
 

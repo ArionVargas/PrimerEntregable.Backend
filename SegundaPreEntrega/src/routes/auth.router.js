@@ -23,34 +23,34 @@ authRouter.post("/register", async (req, res) => {
 authRouter.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body
+       
         const user = await userModel.findOne({ email, password })
 
         if (!user) {
-            return res.status(401).send({ status: "error", error: "Incorrect credentials" })
+            return res.status(401).send({ status: "false", error: "Incorrect credentials" })
         }
 
         req.session.user = {
             firstName: `${user.firstName}`,
             email: user.email
         }
+        
 
-     
         res.status(200).json({ status: "success", user: req.session.user })
     } catch (error) {
         console.error('Error al iniciar sesión', error)
-        res.status(500).json({ success: false, message: 'Error interno del servidor' })
+        res.status(500).json({ status: "false", message: 'Error interno del servidor' })
     }
 })
 
-authRouter.get("/", (req, res) => {
-    /* render('/products') */
-    if (req.session.user) {
-        res.redirect('/api/products', {
-            user: req.session.user
-        })
-    } else {
-        res.redirect('/login')
-    }
-}
-)
+authRouter.post('/logout', (req, res) => {
+    req.session.destroy(error => {
+        if (error) {
+            res.json({ error: 'error logout', message: 'error al cerrar sesión' })
+        } else {
+            res.redirect('/login'); // Redirige a la página de login después de cerrar sesión
+        }
+    })
+})
+
 export default authRouter

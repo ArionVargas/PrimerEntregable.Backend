@@ -1,10 +1,13 @@
+
 const form = document.getElementById('loginForm')
 
 form.addEventListener('submit', e => {
-    e.preventDefault();
-    const data = new FormData(form);
+    e.preventDefault()
+   
+    const data = new FormData(form)
+   
     const obj = {};
-    console.log(data)
+    
     data.forEach((value, key) => obj[key] = value)
     fetch('/api/login', {
         method: 'POST',
@@ -12,17 +15,21 @@ form.addEventListener('submit', e => {
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(response => response.json())
-        .then(data => {
-            console.log('Respuesta recibida:', data)
-            if (data.success) {
+    }).then(response => {
+        console.log('Respuesta recibida de response:', response)
+        return response.json()
+        }).then(data => {
+            
+            if (data.status === 'success') {
+               
                 window.location.replace('/api/products')
             } else {
+               
                 window.location.replace('/login')
             }
         })
         .catch(error => {
-            console.error('Error en la solicitud:', error);
-            window.location.replace('/login');
+           
+            window.location.replace('/login')
         })
 })
