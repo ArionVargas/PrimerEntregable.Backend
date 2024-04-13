@@ -9,6 +9,8 @@ import cartsModel from "./models/carts.model.js"
 import session from "express-session"
 import router from './routes/views.router.js'
 import authRouter from './routes/auth.router.js'
+import passport from "passport"
+import initializePassport from "./config/passport.js"
 
 const PORT = 8080
 const app = express()
@@ -60,5 +62,9 @@ const connectMongoDB = async () => {
     cartsModel.find().populate("products.product_id")
 
 }
+
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 connectMongoDB()

@@ -1,10 +1,12 @@
 import express from 'express'
 import userModel from '../models/users.model.js'
+/* import { createHash } from '../../utils.js' */
+import passport from 'passport'
 
 const authRouter = express.Router()
 
-authRouter.post("/register", async (req, res) => {
-    const { firstName, lastName, email, password } = req.body
+authRouter.post("/register",passport.authenticate('register',{failureRedirect:'/api/register'}), async (req, res) => {
+   /*  const { firstName, lastName, email, password } = req.body
 
     const exists = await userModel.findOne({ email })
     if (exists) {
@@ -14,9 +16,10 @@ authRouter.post("/register", async (req, res) => {
         firstName,
         lastName,
         email,
-        password
+        password: createHash(password)
     }
-    const result = await userModel.create(user)
+    const result = await userModel.create(user) */
+
     return res.redirect('/login')
 })
 
