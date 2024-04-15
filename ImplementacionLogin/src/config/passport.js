@@ -2,10 +2,46 @@ import passport from "passport"
 import passportLocal from "passport-local"
 import userModel from "../models/users.model.js"
 import { createHash, isValidPassword } from "../../utils.js"
+import GitHubStrategy from 'passport-github2'
 
 const localStrategy = passportLocal.Strategy
 
 const initializePassport = () => {
+
+    passport.use('github', new GitHubStrategy(
+        {
+            clientID: 'Iv1.b42560ee6348422e',
+            clientSecret: '5edb99fd472cfd85d1e0699c7ec137d422d4c3ae',
+            callbackUrl: 'http://localhost:8080/api/githubcallback'
+        }, async (accessToken, refreshToken, profile, done) => {
+
+            console.log("perfil obtenido de github en passport js")
+            console.log(profile)
+            try {
+                const user = await userModel.findOne({ email: profile._json.email })
+                console.log('usuario encontrado para login ')
+                console.log(user)
+
+                if (!user) {
+                    
+                    let newUser = {
+                        firstName:profile._json.name,
+                        lastName:'',
+                        email:profile._json.email,
+                        password:''
+                    }
+
+                   const result = await userModel.create(newUser)
+                   return done(null,result)
+                }else{
+                    return done(null,user)
+                }
+            } catch (error) {
+                return done(error)
+            }
+
+        }
+    ))
 
     passport.use('register', new localStrategy(
         { passReqToCallback: true, usernameField: "email" },
@@ -45,11 +81,11 @@ const initializePassport = () => {
                     return done(null, false)
                 }
 
-                if (!isValidPassword(user,password)) {
+                if (!isValidPassword(user, password)) {
                     /* return res.status(401).send({ status: "false", error: "Incorrect credentials" }) */
-                return done(null,false)
+                    return done(null, false)
                 }
-                
+
                 return done(null, user)
 
             } catch (error) {

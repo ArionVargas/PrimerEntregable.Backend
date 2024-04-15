@@ -15,12 +15,23 @@ router.get('/session', (req, res) => {
     res.render('session')
 })
 
-router.get('/logout', (req,res)=>{
-    req.session.destroy(error=>{
-        if(error){
-            res.json({error: 'error logout',massage: 'error al cerrar session'})
+
+router.get('/github/login', (req, res) => {
+    res.render('githubLogin')
+})
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(error => {
+        if (error) {
+            res.json({ error: 'error logout', massage: 'error al cerrar session' })
         }
         res.send('session cerrada correctamente')
+    })
+})
+
+router.get('/', (req, res) => {
+    res.render('productsdb', {
+        user: req.session.user
     })
 })
 

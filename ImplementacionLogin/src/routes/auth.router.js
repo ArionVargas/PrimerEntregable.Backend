@@ -1,9 +1,16 @@
 import express from 'express'
 import userModel from '../models/users.model.js'
-/* import { createHash } from '../../utils.js' */
 import passport from 'passport'
 
 const authRouter = express.Router()
+
+authRouter.get('/github', passport.authenticate('github',{scope:['user:email']}),(req ,res)=>{
+
+})
+
+authRouter.get('/githubcallback',()=>{
+//redireccionar a /api/products
+})
 
 authRouter.post("/register", passport.authenticate('register', { failureRedirect: '/api/register' }), async (req, res) => {
     /*  const { firstName, lastName, email, password } = req.body
