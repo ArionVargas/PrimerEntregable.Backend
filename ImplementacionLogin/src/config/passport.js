@@ -23,18 +23,18 @@ const initializePassport = () => {
                 console.log(user)
 
                 if (!user) {
-                    
+
                     let newUser = {
-                        firstName:profile._json.name,
-                        lastName:'',
-                        email:profile._json.email,
-                        password:''
+                        firstName: profile._json.name,
+                        lastName: '',
+                        email: profile._json.email,
+                        password: ''
                     }
 
-                   const result = await userModel.create(newUser)
-                   return done(null,result)
-                }else{
-                    return done(null,user)
+                    const result = await userModel.create(newUser)
+                    return done(null, result)
+                } else {
+                    return done(null, user)
                 }
             } catch (error) {
                 return done(error)
@@ -82,7 +82,7 @@ const initializePassport = () => {
                 }
 
                 if (!isValidPassword(user, password)) {
-                    /* return res.status(401).send({ status: "false", error: "Incorrect credentials" }) */
+
                     return done(null, false)
                 }
 

@@ -17,7 +17,7 @@ router.get('/session', (req, res) => {
 
 
 router.get('/github/login', (req, res) => {
-    res.render('githubLogin')
+    res.render('github')
 })
 
 router.get('/logout', (req, res) => {

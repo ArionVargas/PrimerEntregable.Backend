@@ -16,7 +16,6 @@ form.addEventListener('submit', e => {
             'Content-Type': 'application/json'
         }
     }).then(response => {
-        console.log('Respuesta recibida de response:', response)
         return response.json()
         }).then(data => {
             

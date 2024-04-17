@@ -8,8 +8,17 @@ authRouter.get('/github', passport.authenticate('github',{scope:['user:email']})
 
 })
 
-authRouter.get('/githubcallback',()=>{
+authRouter.get('/githubcallback',passport.authenticate('github',{failureRedirect:'/github/error'}),(res,req)=>{
 //redireccionar a /api/products
+const user = req.user 
+console.log(user)
+req.session.user = {
+    name: `${user.firstName} ${user.lastName}`,
+    email: user.email,
+}
+res.redirect('productsdb')
+
+
 })
 
 authRouter.post("/register", passport.authenticate('register', { failureRedirect: '/api/register' }), async (req, res) => {
