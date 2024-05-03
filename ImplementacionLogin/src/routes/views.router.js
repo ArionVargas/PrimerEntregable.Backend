@@ -1,19 +1,26 @@
 import express from "express"
+import { authToken, passportCall } from "../../utils.js"
+import passport from "passport"
+
 
 const router = express.Router()
 
 router.get("/login", (req, res) => {
+    console.log('GET /login en viwes')
+    /* if (!req.session.user) {
+        return res.redirect('/register')
+    }
+    res.render('productsdb', {
+        user: req.session.user
+    }) */
     res.render("login")
 })
 
 router.get('/signup', (req, res) => {
+    console.log('GET /signup')
     res.render('register')
 })
 
-
-router.get('/session', (req, res) => {
-    res.render('session')
-})
 
 
 router.get('/github/login', (req, res) => {
@@ -29,9 +36,14 @@ router.get('/logout', (req, res) => {
     })
 })
 
-router.get('/', (req, res) => {
+
+router.get('/', 
+/* passport.authenticate('jwt',{session:false}) */
+passportCall('jwt'),
+(req, res) => {
+    
     res.render('productsdb', {
-        user: req.session.user
+        user: req.user
     })
 })
 

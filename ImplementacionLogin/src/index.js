@@ -41,6 +41,8 @@ app.use("/api/carts", cartsdbRouter)
 app.use("/api",authRouter)
 app.use("/", router)
 
+
+
 const httpServer = app.listen(PORT, (req, res) => {
     console.log(`Server run on port: ${PORT}`)
 })

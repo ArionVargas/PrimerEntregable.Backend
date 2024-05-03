@@ -8,9 +8,7 @@ const productsdbRouter = Router()
 productsdbRouter.get('/', async (req, res) => {
     try {
         let { page = 1, limit = 10, sort } = req.query
-        
-        const firstName = req.session.user ? req.session.user.firstName : null
-      
+        const firstName = req.session.user ? req.session.user.name : null
         const result = await productManager.getAllProducts(page, limit, sort)
         
        
