@@ -53,8 +53,8 @@ authRouter.post("/login", passport.authenticate('login', {
         maxAge: 60000,
         httpOnly: false
     })
-   /*  res.status(200).json({ status: 200, user: req.user }) */
-     res.redirect('/api/products')
+    res.status(200).json({ status: 'success', user })
+     /* res.redirect('/api/products') */
 
 }
 )

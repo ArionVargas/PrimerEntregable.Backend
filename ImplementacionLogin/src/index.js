@@ -11,8 +11,11 @@ import router from './routes/views.router.js'
 import authRouter from './routes/auth.router.js'
 import passport from "passport"
 import initializePassport from "./config/passport.js"
+import config from './config/configServer.js'
+/* import { envs } from "./config/configServer.js" */
+/* import 'dotenv/config'  */
 
-const PORT = 8080
+/* const PORT = 8080 */
 const app = express()
 
 app.use(express.json())
@@ -41,10 +44,15 @@ app.use("/api/carts", cartsdbRouter)
 app.use("/api",authRouter)
 app.use("/", router)
 
+const PORT = config.port
+console.log(PORT);
 
-
-const httpServer = app.listen(PORT, (req, res) => {
+/* const PORT = envs.PORT */
+app.listen(PORT, (req, res) => {
     console.log(`Server run on port: ${PORT}`)
+
+    console.log(config)
+
 })
 
 
