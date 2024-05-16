@@ -1,21 +1,20 @@
 import express from "express"
 import __dirname from "../utils.js"
 import handlebars from "express-handlebars"
-import mongoose from "mongoose"
+/* import mongoose from "mongoose" */
 import usersRouter from "./routes/users.router.js"
 import productsdbRouter from "./routes/productsdb.router.js"
 import cartsdbRouter from "./routes/cartsdb.router.js"
-import cartsModel from "./models/carts.model.js"
+/* import cartsModel from "./models/carts.model.js" */
 import session from "express-session"
 import router from './routes/views.router.js'
 import authRouter from './routes/auth.router.js'
 import passport from "passport"
 import initializePassport from "./config/passport.js"
 import config from './config/configServer.js'
-/* import { envs } from "./config/configServer.js" */
-/* import 'dotenv/config'  */
+import MongoSingleton from "./config/mongodbSingleton.js"
 
-/* const PORT = 8080 */
+
 const app = express()
 
 app.use(express.json())
@@ -47,7 +46,6 @@ app.use("/", router)
 const PORT = config.port
 console.log(PORT);
 
-/* const PORT = envs.PORT */
 app.listen(PORT, (req, res) => {
     console.log(`Server run on port: ${PORT}`)
 
@@ -56,7 +54,22 @@ app.listen(PORT, (req, res) => {
 })
 
 
-const URL_mongo = "mongodb+srv://arionvargas07:YmcnUi3N3c5JyqAh@cluster2.nzze0xu.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster2"
+// Singleton 
+
+const mongoInstance = async () =>{
+    try {
+        await MongoSingleton.getInstance()
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+mongoInstance()
+
+
+//Db llamada directa
+
+/* const URL_mongo = "mongodb+srv://arionvargas07:YmcnUi3N3c5JyqAh@cluster2.nzze0xu.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster2"
 
 const connectMongoDB = async () => {
     try {
@@ -71,10 +84,10 @@ const connectMongoDB = async () => {
     //populate
     cartsModel.find().populate("products.product_id")
 
-}
+} */
 
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 
-connectMongoDB()
+/* connectMongoDB() */

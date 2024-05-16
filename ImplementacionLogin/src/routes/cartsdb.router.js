@@ -1,13 +1,13 @@
 import { Router } from "express"
-import CartManager from '../cartsManagerdb.js'
+import cartsDAO from '../dao/mongodb/cartsDAO.js'
 
 const cartsdbRouter = Router()
-const cartManager = new CartManager()
+const cartsDaoInstance = new cartsDAO()
 
 // Obtener todos los carritos
 cartsdbRouter.get('/', async (req, res) => {
   try {
-    const carts = await cartManager.getCarts()
+    const carts = await cartsDaoInstance.getCarts()
     res.json(carts)
   } catch (err) {
     res.status(500).json({ message: err.message })
@@ -17,7 +17,7 @@ cartsdbRouter.get('/', async (req, res) => {
 // Obtener un carrito específico por su ID
 cartsdbRouter.get('/:id', async (req, res) => {
   try {
-    const cartProducts = await cartManager.getCartWithProducts(req.params.id)
+    const cartProducts = await cartsDaoInstance.getCartWithProducts(req.params.id)
     res.json(cartProducts)
   } catch (err) {
     res.status(500).json({ message: err.message })
@@ -27,7 +27,7 @@ cartsdbRouter.get('/:id', async (req, res) => {
 // Crear un nuevo carrito
 cartsdbRouter.post('/', async (req, res) => {
   try {
-    const newCart = await cartManager.newCart()
+    const newCart = await cartsDaoInstance.newCart()
     res.status(201).json(newCart)
   } catch (err) {
     res.status(400).json({ message: err.message })
@@ -40,7 +40,7 @@ cartsdbRouter.post('/:cartId/add-product', async (req, res) => {
   try {
     const { product_id } = req.body;
     const { cartId } = req.params;
-    await cartManager.addProductCart(cartId, product_id)
+    await cartsDaoInstance.addProductCart(cartId, product_id)
     res.json({ message: 'Producto agregado al carrito con éxito' })
   } catch (err) {
     res.status(400).json({ message: err.message })
@@ -51,7 +51,7 @@ cartsdbRouter.post('/:cartId/add-product', async (req, res) => {
 cartsdbRouter.delete('/:cid/products/:pid', async (req, res) => {
   try {
     const { cid, pid } = req.params
-    await cartManager.deleteProductFromCart(cid, pid)
+    await cartsDaoInstance.deleteProductFromCart(cid, pid)
     res.json({ message: 'Producto eliminado del carrito con éxito' })
   } catch (err) {
     res.status(400).json({ message: err.message })

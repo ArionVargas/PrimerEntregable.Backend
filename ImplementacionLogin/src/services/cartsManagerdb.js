@@ -1,5 +1,4 @@
-/* import mongoose from 'mongoose' */
-import cartsModel from './models/carts.model.js'
+/* import cartsModel from '../models/carts.model.js'
 
 
 class CartManager {
@@ -31,7 +30,7 @@ class CartManager {
             return null
         }
     }
-//revisar ///
+
     async addProductCart(cart_id, product_id) {
         try {
             const cart = await cartsModel.findById(cart_id)
@@ -58,7 +57,7 @@ class CartManager {
           if (!cart) {
             throw new Error('Carrito no encontrado')
           }
-          // Filtrar los productos para excluir el producto con el ID especificado
+         
           cart.products = cart.products.filter(product => product._id.toString() !== productId)
           await cart.save()
         } catch (err) {
@@ -76,4 +75,4 @@ class CartManager {
       }
 }
 
-export default CartManager
+export default CartManager */

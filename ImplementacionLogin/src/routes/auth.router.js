@@ -1,5 +1,5 @@
 import express from 'express'
-import userModel from '../models/users.model.js'
+/* import userModel from '../models/users.model.js' */
 import passport from 'passport'
 import { generateJWToken } from '../../utils.js'
 
@@ -14,7 +14,6 @@ authRouter.get('/github', passport.authenticate('github', { scope: ['user:email'
 }) */
 
 authRouter.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
-    //redireccionar a /api/products
     const user = req.user
     console.log('en authrouter user...')
     console.log(user)

@@ -20,16 +20,3 @@ export default {
     port: process.env.SERVER_PORT,
     mongoURL: process.env.MONGO_URL,
 }
-// CON ENV VAR 
-/* import {get} from 'env-var' */
-/* import pkg from 'env-var'
-const {get} = pkg */
-
-
-/* const { get } = envVar */
-
-
-/* export const envs = {
-    PORT: get('SERVER_PORT').required().asPortNumber(),
-    MONGO_URL: get('MONGO_URL').required().asString()
-} */

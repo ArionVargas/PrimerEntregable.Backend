@@ -1,15 +1,16 @@
 import { Router } from "express"
-import ProductManager from "../productManager.js"
+import productsDAO from '../dao/mongodb/productsDAO.js'
 
-const productManager = new ProductManager()
 const productsdbRouter = Router()
+const productsDaoInstance = new productsDAO()
+
 
 // GET
 productsdbRouter.get('/', async (req, res) => {
     try {
         let { page = 1, limit = 10, sort } = req.query
         const firstName = req.session.user ? req.session.user.name : null
-        const result = await productManager.getAllProducts(page, limit, sort)
+        const result = await productsDaoInstance.getAllProducts(page, limit, sort)
         
        
       res.render('productsdb', { firstName , ...result})
@@ -22,7 +23,7 @@ productsdbRouter.get('/', async (req, res) => {
 // POST
 productsdbRouter.post("/", async (req, res) => {
     try {
-        const newProduct = await productManager.addProduct(req.body)
+        const newProduct = await productsDaoInstance.addProduct(req.body)
         res.status(201).json(newProduct)
     } catch (error) {
         console.error("Error al crear un nuevo producto:", error)
@@ -34,7 +35,7 @@ productsdbRouter.post("/", async (req, res) => {
 productsdbRouter.get('/:id', async (req, res) => {
     try {
         const productId = req.params.id
-        const product = await productManager.getProductById(productId)
+        const product = await productsDaoInstance.getProductById(productId)
         if (!product) {
             return res.status(404).send('Producto no encontrado')
         }
@@ -50,7 +51,7 @@ productsdbRouter.get('/:id', async (req, res) => {
 productsdbRouter.put("/:id", async (req, res) => {
     try {
         const productId = req.params.id
-        const updatedProduct = await productManager.updateProduct(productId, req.body)
+        const updatedProduct = await productsDaoInstance.updateProduct(productId, req.body)
         if (!updatedProduct) {
             return res.status(404).send("Producto no encontrado")
         }
@@ -65,7 +66,7 @@ productsdbRouter.put("/:id", async (req, res) => {
 productsdbRouter.delete("/:id", async (req, res) => {
     try {
         const productId = req.params.id
-        const deletedProduct = await productManager.deleteProduct(productId)
+        const deletedProduct = await productsDaoInstance.deleteProduct(productId)
         if (!deletedProduct) {
             return res.status(404).send("Producto no encontrado")
         }
