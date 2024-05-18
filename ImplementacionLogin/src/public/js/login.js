@@ -33,7 +33,7 @@ form.addEventListener('submit', e => {
                 })
         } else if (response.status === 401) {
             console.log(response)
-            /* window.location.replace('/login') */
+            window.location.replace('/login')
         }
     })
 })

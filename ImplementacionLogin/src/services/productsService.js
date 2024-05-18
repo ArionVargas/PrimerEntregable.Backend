@@ -6,21 +6,21 @@ const productDao = new ProductDaoMongo()
 const productDao = new ProductDaoFilesystem() */
 
 export const getAllProducts = async () => {
-    return await productDao.getAllProducts();
-};
+    return await productDao.getAllProducts()
+}
 
 export const getProductById = async (productId) => {
-    return await productDao.getProductById(productId);
-};
+    return await productDao.getProductById(productId)
+}
 
 export const addProduct = async (product) => {
-    return await productDao.addProduct(product);
-};
+    return await productDao.addProduct(product)
+}
 
 export const updateProduct = async (productId, updatedProduct) => {
-    return await productDao.updateProduct(productId, updatedProduct);
-};
+    return await productDao.updateProduct(productId, updatedProduct)
+}
 
 export const deleteProduct = async (productId) => {
-    return await productDao.deleteProduct(productId);
-};
+    return await productDao.deleteProduct(productId)
+}

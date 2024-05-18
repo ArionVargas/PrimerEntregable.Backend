@@ -44,18 +44,18 @@ export const authToken = (req,res,next) =>{
 
 export const passportCall = (strategy) => {
     return async (req, res, next) => {
-        console.log("Entrando a llamar strategy: ");
-        console.log(strategy);
+        console.log("Entrando a llamar strategy: ")
+        console.log(strategy)
         passport.authenticate(strategy, function (err, user, info) {
-            if (err) return next(err);
+            if (err) return next(err)
             if (!user) {
-                return res.status(401).send({ error: info.messages ? info.messages : info.toString() });
+                return res.status(401).send({ error: info.messages ? info.messages : info.toString() })
             }
-            console.log("Usuario obtenido del strategy: ");
-            console.log(user);
-            req.user = user;
-            next();
-        })(req, res, next);
+            console.log("Usuario obtenido del strategy: ")
+            console.log(user)
+            req.user = user
+            next()
+        })(req, res, next)
     }
 }
 

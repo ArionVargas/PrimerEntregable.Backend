@@ -56,7 +56,7 @@ authRouter.post('/logout', (req, res) => {
         if (error) {
             res.json({ error: 'error logout', message: 'error al cerrar sesión' })
         } else {
-            res.redirect('/login'); // Redirige a la página de login después de cerrar sesión
+            res.redirect('/login')
         }
     })
 })

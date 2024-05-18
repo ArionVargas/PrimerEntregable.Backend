@@ -23,34 +23,6 @@ productsdbRouter.get('/', async (req, res) => {
 
 /* productsdbRouter.get('/', async (req, res) => {
     try {
-        // Verifica si el token de autenticación está presente en el encabezado de la solicitud
-        const token = req.headers.authorization;
-
-        if (!token) {
-            // Si no se proporciona token, devuelve un error de no autorizado
-            return res.status(401).json({ message: 'No se proporcionó token de autenticación' });
-        }
-
-        // Verifica el token para validar la autenticación
-        jwt.verify(token, 'clave_secreta', async (err, decoded) => {
-            if (err) {
-                // Si el token no es válido, devuelve un error de no autorizado
-                return res.status(401).json({ message: 'Token de autenticación inválido' });
-            }
-
-            // Si el token es válido, obtén los productos y responde con los datos
-            let { page = 1, limit = 10, sort } = req.query;
-            const result = await productsDaoInstance.getAllProducts(page, limit, sort);
-            res.json(result);
-        });
-    } catch (error) {
-        console.error('Error al obtener productos:', error);
-        res.status(500).json({ message: 'Error interno del servidor' });
-    }
-}); */
-
-/* productsdbRouter.get('/', async (req, res) => {
-    try {
         let { page = 1, limit = 10, sort } = req.query
         const firstName = req.session.user ? req.session.user.name : null
         const result = await productsDaoInstance.getAllProducts(page, limit, sort)
