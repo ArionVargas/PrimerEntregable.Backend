@@ -9,9 +9,6 @@ authRouter.get('/github', passport.authenticate('github', { scope: ['user:email'
 
 })
 
-/* authRouter.get('/register', passport.authenticate('register',{scope:['user:email']}),(req ,res)=>{
-
-}) */
 
 authRouter.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
     const user = req.user
@@ -33,11 +30,6 @@ authRouter.post("/register", passport.authenticate('register', {
     failureRedirect: '/signup',
 }))
 
-/* authRouter.post("/register", passport.authenticate('register', { }), async (req, res) => {
-    return res.redirect('/login')
-})
- */
-
 authRouter.post("/login", passport.authenticate('login', {
     failureRedirect: '/login'
 }), async (req, res) => {
@@ -58,23 +50,6 @@ authRouter.post("/login", passport.authenticate('login', {
 }
 )
 
-/* authRouter.post("/login", passport.authenticate('login',{ failureRedirect: '/api/login' }), async (req, res) => {
-    
-    const user = req.user
-    
-    console.log(user)
-    if (!user) return res.status(401).send({ status: "error", error: "El usuario y la Contraseña son incorrectos" })
-
-
-    req.session.user = {
-        firstName: `${user.firstName}`,
-        email: user.email
-    }
-
-
-    res.status(200).json({ status: "success", user: req.session.user })
-
-}) */
 
 authRouter.post('/logout', (req, res) => {
     req.session.destroy(error => {

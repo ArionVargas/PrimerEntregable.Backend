@@ -1,82 +1,56 @@
-import mongoose from "mongoose";
 import MongoSingleton from "../../config/mongodbSingleton.js"
-import cartsModel from '../../models/carts.model.js'
+import cartsModel from '../../models/modelsMongo/carts.model.js'
 
-class CartsDAO {
+
+class CartDao {
   constructor() {
-    this.mongoInstance = MongoSingleton.getInstance() // Obtiene la instancia de conexión Singleton
-}
-
-async getCarts() {
-  try {
-      await this.mongoInstance; // Espera a que la conexión a MongoDB esté establecida
-      return await cartsModel.find()
-  } catch (error) {
-      console.error("Error al obtener los carritos:", error)
-      return []
+    MongoSingleton.getInstance()
   }
-}
 
-  async getCartProducts(id) {
+  async getCarts() {
     try {
-      const cart = await cartsModel.findById(id)
-      return cart ? cart.products : []
-    } catch (err) {
-      console.error('Error al obtener los productos del carrito:', err)
-      return []
+      return await cartsModel.find();
+    } catch (error) {
+      console.error('Error al obtener los carritos:', error);
+      return [];
     }
   }
 
-  async newCart() {
+  async getCartById(cartId) {
     try {
-      return await cartsModel.create({ products: [] })
-    } catch (err) {
-      console.error('Error al crear un nuevo carrito:', err)
-      return null
+      return await cartsModel.findById(cartId);
+    } catch (error) {
+      console.error('Error al obtener el carrito por ID:', error);
+      return null;
     }
   }
 
-  async addProductCart(cart_id, product_id) {
+  async addCart(cart) {
     try {
-      const cart = await cartsModel.findById(cart_id)
-      if (!cart) {
-        console.log('Carrito no encontrado')
-        return
-      }
-      const productIndex = cart.products.findIndex(product => product.product_id.toString() === product_id)
-      if (productIndex !== -1) {
-        cart.products[productIndex].quantity += 1
-      } else {
-        cart.products.push({ product_id, quantity: 1 })
-      }
-      await cart.save()
-      console.log('Producto agregado con éxito')
-    } catch (err) {
-      console.error('Error al agregar el producto al carrito:', err)
+      return await cartsModel.create(cart);
+    } catch (error) {
+      console.error('Error al agregar un carrito:', error);
+      return null;
     }
   }
 
-  async deleteProductFromCart(cartId, productId) {
+  async updateCart(cartId, updatedCart) {
     try {
-      const cart = await cartsModel.findById(cartId)
-      if (!cart) {
-        throw new Error('Carrito no encontrado')
-      }
-      cart.products = cart.products.filter(product => product._id.toString() !== productId)
-      await cart.save()
-    } catch (err) {
-      throw new Error(`Error al eliminar producto del carrito: ${err.message}`)
+      return await cartsModel.findByIdAndUpdate(cartId, updatedCart, { new: true });
+    } catch (error) {
+      console.error('Error al actualizar el carrito:', error);
+      return null;
     }
   }
 
-  async getCartWithProducts(id) {
+  async deleteCart(cartId) {
     try {
-      return await cartsModel.findById(id).populate("products.product_id")
-    } catch (err) {
-      console.error('Error al obtener el carrito con productos:', err)
-      return null
+      return await cartsModel.findByIdAndDelete(cartId);
+    } catch (error) {
+      console.error('Error al eliminar el carrito:', error);
+      return null;
     }
   }
 }
 
-export default CartsDAO
+export default CartDao

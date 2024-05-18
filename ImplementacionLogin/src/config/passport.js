@@ -1,8 +1,8 @@
 import passport from "passport"
 import passportLocal from "passport-local"
-import userModel from "../models/users.model.js"
+import userModel from "../models/modelsMongo/users.model.js"
 import { createHash, isValidPassword } from "../../utils.js"
-/* import GitHubStrategy from 'passport-github2' */
+import GitHubStrategy from 'passport-github2'
 import jwtStrategy from 'passport-jwt'
 import { PRIVATE_KEY } from '../../utils.js'
 
@@ -32,7 +32,7 @@ const initializePassport = () => {
         }
     ))
 
-    /* passport.use('github', new GitHubStrategy(
+    passport.use('github', new GitHubStrategy(
         {
             clientID: 'Iv1.b42560ee6348422e',
             clientSecret: '5edb99fd472cfd85d1e0699c7ec137d422d4c3ae',
@@ -68,7 +68,7 @@ const initializePassport = () => {
             }
 
         }
-    ))*/
+    ))
 
     passport.use('register', new localStrategy(
         { passReqToCallback: true, usernameField: "email" },

@@ -7,12 +7,6 @@ const router = express.Router()
 
 router.get("/login", (req, res) => {
     console.log('GET /login en viwes')
-    /* if (!req.session.user) {
-        return res.redirect('/register')
-    }
-    res.render('productsdb', {
-        user: req.session.user
-    }) */
     res.render("login")
 })
 

@@ -1,6 +1,11 @@
-import productsModel from '../../models/products.model.js'
+import productsModel from '../../models/modelsMongo/products.model.js'
+import MongoSingleton from '../../config/mongodbSingleton.js'
 
 class ProductsDAO {
+  constructor(){
+    MongoSingleton.getInstance()
+  }
+
   async getAllProducts() {
     try {
       return await productsModel.find()
