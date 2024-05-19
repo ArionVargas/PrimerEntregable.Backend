@@ -1,5 +1,6 @@
 import { Router } from "express"
 import productsDAO from '../dao/mongodb/productsDAO.js'
+import { authenticateUser } from "../config/authUtils.js"
 
 const productsdbRouter = Router()
 const productsDaoInstance = new productsDAO()
@@ -8,6 +9,20 @@ const productsDaoInstance = new productsDAO()
 // GET
 
 productsdbRouter.get('/', async (req, res) => {
+    try {
+        let { page = 1, limit = 10, sort } = req.query
+        const user = await authenticateUser(req) // Autentica al usuario utilizando el token JWT
+        const firstName = user ? user.firstName : null // Obtiene el nombre del usuario
+
+        const result = await productsDaoInstance.getAllProducts(page, limit, sort)
+        res.render('productsdb', { firstName, ...result })
+    } catch (error) {
+        console.error('Error al obtener productos:', error)
+        res.status(500).send('Error interno del servidor')
+    }
+})
+
+/* productsdbRouter.get('/', async (req, res) => {
     try {
         let { page = 1, limit = 10, sort } = req.query
         const user = req.session.user
@@ -19,21 +34,8 @@ productsdbRouter.get('/', async (req, res) => {
         console.error('Error al obtener productos:', error)
         res.status(500).send('Error interno del servidor')
     }
-})
-
-/* productsdbRouter.get('/', async (req, res) => {
-    try {
-        let { page = 1, limit = 10, sort } = req.query
-        const firstName = req.session.user ? req.session.user.name : null
-        const result = await productsDaoInstance.getAllProducts(page, limit, sort)
-        
-       
-      res.render('productsdb', { firstName , ...result})
-    } catch (error) {
-        console.error('Error al obtener productos:', error)
-        res.status(500).send('Error interno del servidor')
-    }
 }) */
+
 
 // POST
 productsdbRouter.post("/", async (req, res) => {
