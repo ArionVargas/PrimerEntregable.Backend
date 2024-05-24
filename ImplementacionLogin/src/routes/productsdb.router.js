@@ -22,19 +22,6 @@ productsdbRouter.get('/', async (req, res) => {
     }
 })
 
-/* productsdbRouter.get('/', async (req, res) => {
-    try {
-        let { page = 1, limit = 10, sort } = req.query
-        const user = req.session.user
-        const firstName = user ? user.name : null
-        const result = await productsDaoInstance.getAllProducts(page, limit, sort)
-        
-        res.render('productsdb', { firstName , ...result })
-    } catch (error) {
-        console.error('Error al obtener productos:', error)
-        res.status(500).send('Error interno del servidor')
-    }
-}) */
 
 
 // POST

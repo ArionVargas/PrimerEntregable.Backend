@@ -1,5 +1,4 @@
 import express from 'express'
-/* import userModel from '../models/users.model.js' */
 import passport from 'passport'
 import { generateJWToken } from '../../utils.js'
 
@@ -45,7 +44,7 @@ authRouter.post("/login", passport.authenticate('login', {
         httpOnly: false
     })
     res.status(200).json({ status: 'success', user })
-     /* res.redirect('/api/products') */
+    /* res.redirect('/api/products') */
 
 }
 )
