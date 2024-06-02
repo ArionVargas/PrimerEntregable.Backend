@@ -2,6 +2,7 @@ import { fileURLToPath } from "url"
 import { dirname } from "path"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import passport from "passport"
 
 export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10))
 /* export const isValidPassword = (user, password) => bcrypt.compareSync(password, user.password) */
@@ -32,7 +33,7 @@ export const authToken = (req,res,next) =>{
         return res.status(401).send({error:'user no autorizado'})
     }
 
-    const token = authHeader.split(''[1])
+    const token = authHeader.split(' ')[1]
     jwt.verify(token,PRIVATE_KEY,(error,credentials)=>{
         if (error) return res.status(403).send({error:'token invalido en utils'})
 

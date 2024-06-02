@@ -14,25 +14,25 @@ form.addEventListener('submit', e => {
         body: JSON.stringify(obj),
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        credentials: 'include'
     }).then(response => {
         if (response.status === 200) {
+            console.log('en login')
+            console.log(response);
             return response.json()
                 .then(data => {
-                    console.log('Cookies generadas en login public')
-                    console.log(document.cookie)
-
-                    console.log(data)
                     if (data.status === 'success') {
                        console.log(data);
-                        window.location.replace('/api/products', data.user)
+                       /*  window.location.replace('/api/products', data.user) */
+                        window.location.replace('api/products', data.user)
                     } else {
                        
                         window.location.replace('/login')
                     }
                 })
         } else if (response.status === 401) {
-            console.log(response)
+            
             window.location.replace('/login')
         }
     })

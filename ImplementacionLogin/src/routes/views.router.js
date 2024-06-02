@@ -31,16 +31,15 @@ router.get('/logout', (req, res) => {
 })
 
 
-router.get('/', 
-/* passport.authenticate('jwt',{session:false}) */
-passportCall('jwt'),
-(req, res) => {
-    
-    res.render('productsdb', {
-        user: req.user
-    })
-})
+/* router.get('/',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
 
+        res.send('api/prodcutsdb', {
+            user: req.user
+        })
+    })
+ */
 
 
 export default router

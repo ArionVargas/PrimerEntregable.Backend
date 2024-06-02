@@ -1,11 +1,10 @@
 import express from "express"
 import __dirname from "../utils.js"
-import handlebars from "express-handlebars"
-/* import mongoose from "mongoose" */
+import exphbs  from "express-handlebars"
+import Handlebars from "handlebars"
 import usersRouter from "./routes/users.router.js"
 import productsdbRouter from "./routes/productsdb.router.js"
 import cartsdbRouter from "./routes/cartsdb.router.js"
-/* import cartsModel from "./models/carts.model.js" */
 import session from "express-session"
 import router from './routes/views.router.js'
 import authRouter from './routes/auth.router.js'
@@ -13,18 +12,29 @@ import passport from "passport"
 import initializePassport from "./config/passport.js"
 import config from './config/configServer.js'
 import MongoSingleton from "./config/mongodbSingleton.js"
+import cookieParser from "cookie-parser"
 
 
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser('privatekeyJWT'))
 app.use(express.static(__dirname + "/src/public"))
 
-//handlebars
-app.engine("handlebars", handlebars.engine())
-app.set("view engine", "handlebars")
-app.set("views", __dirname + "/src/views")
+let hbs = exphbs.create({
+    handlebars: Handlebars,
+    defaultLayout: 'main',
+    runtimeOptions: {
+      allowProtoPropertiesByDefault: true,
+      allowProtoMethodsByDefault: true,
+    }
+  });
+  
+  //handlebars
+  app.engine("handlebars", hbs.engine);
+  app.set("view engine", "handlebars")
+  app.set("views", __dirname + "/src/views")
 
 //session
 app.use(session(
@@ -34,6 +44,7 @@ app.use(session(
         saveUninitialized:true
     }
 ))
+
 
 
 //MongoDB
@@ -66,28 +77,8 @@ const mongoInstance = async () =>{
 
 mongoInstance()
 
-
-//Db llamada directa
-
-/* const URL_mongo = "mongodb+srv://arionvargas07:YmcnUi3N3c5JyqAh@cluster2.nzze0xu.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster2"
-
-const connectMongoDB = async () => {
-    try {
-        mongoose.connect(URL_mongo)
-        console.log('conectado correctamente a la db solicitada')
-    } catch (error) {
-        console.error('No se pudo conectar a la bd usando MOngoose:' + error)
-        process.exit()
-    }
-
-
-    //populate
-    cartsModel.find().populate("products.product_id")
-
-} */
-
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 
-/* connectMongoDB() */
+

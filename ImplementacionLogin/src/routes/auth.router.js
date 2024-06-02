@@ -35,16 +35,19 @@ authRouter.post("/login", passport.authenticate('login', {
     const user = req.user
     console.log('en authrouter user...')
     console.log(user)
-    if (!user) return res.status(401).send({ status: "error", error: "El usuario y la Contraseña son incorrectos" })
+    if (!user) return res.status(401).send({ status: "error", error: "Las Credenciales son incorrectos" })
     const access_token = generateJWToken(user)
+    console.log('sigo en auth')
     console.log(access_token)
     /* res.send({access_token: access_token}) */
+    console.log('Setting jwtCookieToken cookie')
     res.cookie('jwtCookieToken', access_token, {
         maxAge: 60000,
         httpOnly: false
     })
+    console.log('Setting jwtCookieToken cookie')
+    console.log('salgo de auth')
     res.status(200).json({ status: 'success', user })
-    /* res.redirect('/api/products') */
 
 }
 )

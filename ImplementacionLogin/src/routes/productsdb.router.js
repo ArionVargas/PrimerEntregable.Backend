@@ -1,6 +1,7 @@
 import { Router } from "express"
 import productsDAO from '../dao/mongodb/productsDAO.js'
 import { authenticateUser } from "../config/authUtils.js"
+import passport from "passport"
 
 const productsdbRouter = Router()
 const productsDaoInstance = new productsDAO()
@@ -8,19 +9,46 @@ const productsDaoInstance = new productsDAO()
 
 // GET
 
-productsdbRouter.get('/', async (req, res) => {
+productsdbRouter.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
+        console.log('en products router');
         let { page = 1, limit = 10, sort } = req.query
-        const user = await authenticateUser(req) // Autentica al usuario utilizando el token JWT
+        console.log(req.query);
+        const user = req.user // Autentica al usuario utilizando el token JWT
+        console.log(user);
         const firstName = user ? user.firstName : null // Obtiene el nombre del usuario
-
+        console.log(firstName)
+        /*  const result = await productsDaoInstance.getAllProducts(page, limit, sort)
+         const isValid = user != null;
+         console.log(result);
+         res.render('productsdb', { firstName, isValid, ...result }) */
         const result = await productsDaoInstance.getAllProducts(page, limit, sort)
-        res.render('productsdb', { firstName, ...result })
+        const products = result; // Asume que 'result' es un array de productos
+        const isValid = user != null;
+        res.render('productsdb', { firstName, isValid, products })
     } catch (error) {
         console.error('Error al obtener productos:', error)
         res.status(500).send('Error interno del servidor')
     }
 })
+
+/* productsdbRouter.get('/', async (req, res) => {
+    try {
+        console.log('en products router');
+        let { page = 1, limit = 10, sort } = req.query
+        const user = req.user // Autentica al usuario utilizando el token JWT
+        console.log(user);
+        const firstName = user ? user.firstName : null // Obtiene el nombre del usuario
+        console.log(firstName)
+        const result = await productsDaoInstance.getAllProducts(page, limit, sort)
+        console.log(result)
+        const isValid = user != null;
+        res.render('productsdb', { firstName, isValid, ...result })
+    } catch (error) {
+        console.error('Error al obtener productos:', error)
+        res.status(500).send('Error interno del servidor')
+    }
+}) */
 
 
 
