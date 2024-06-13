@@ -1,0 +1,68 @@
+// auth.controller.js
+import UsersDAO from '../services/dao/mongodb/usersDAO.js'
+import CartDao from '../services/dao/mongodb/cartsDAO.js'
+import { createHash, isValidPassword } from '../../utils.js'
+/* import passport from 'passport'; */
+
+const usersDaoInstance = new UsersDAO()
+const cartsDaoInstance = new CartDao()
+
+export const registerUser = async (req, res, next) => {
+    passport.authenticate('register', async (err, user, info) => {
+        if (err) {
+            return next(err)
+        }
+        if (!user) {
+            return res.status(400).send(info.message)
+        }
+
+        try {
+            // Crear carrito para el nuevo usuario
+            const cart = await cartsDaoInstance.addCart({ user_id: user._id, products: [] })
+            req.session.cartId = cart._id
+
+            /* const accessToken = generateJWToken(user);
+            res.cookie('jwtCookieToken', accessToken, {
+                maxAge: 60000,
+                httpOnly: true,
+            }); */
+
+            return res.status(201).send('Usuario registrado con éxito')
+        } catch (error) {
+            return res.status(500).send('Error registrando usuario: ' + error.message)
+        }
+    })(req, res, next)
+};
+
+export const loginUser = async (req, res, next) => {
+    passport.authenticate('login', async (err, user, info) => {
+        if (err) {
+            return next(err)
+        }
+        if (!user) {
+            return res.status(401).send(info.message)
+        }
+
+        req.login(user, { session: false }, async (loginErr) => {
+            if (loginErr) {
+                return next(loginErr)
+            }
+
+            req.session.user = user
+
+            let cart = await cartsDaoInstance.getCartByUserId(user._id)
+            if (!cart) {
+                cart = await cartsDaoInstance.addCart({ user_id: user._id, products: [] })
+            }
+            req.session.cartId = cart._id
+
+            const accessToken = generateJWToken(user)
+            res.cookie('jwtCookieToken', accessToken, {
+                maxAge: 60000,
+                httpOnly: true,
+            })
+
+            return res.status(200).json({ status: 'success', user })
+        })
+    })(req, res, next)
+}

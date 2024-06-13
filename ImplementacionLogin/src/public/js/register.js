@@ -15,8 +15,13 @@ form.addEventListener('submit', e => {
             'Content-Type': 'application/json'
         }
     }).then(result => {
-        if (result.status === 200) {
+        if (result.status === 201) {
             window.location.replace('/login')
+        } else {
+            result.json().then(data => {
+                console.error(data)
+                alert(data.message)
+            })
         }
     })
 })

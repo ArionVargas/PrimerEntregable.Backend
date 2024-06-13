@@ -1,22 +1,28 @@
 <div class="container mt-6">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card card-custom">
-                <div class="card-header">
-                    <h3 class="card-title">{{ this.title }}</h3>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Descripción: {{ description }}</p>
-                    <p class="card-text">Precio: {{ price }}</p>
-                    <p class="card-text">Stock: {{ stock }}</p>
-                    <p class="card-text">Categoría: {{ category }}</p>
-                    <!-- Agregar al carrito -->
-                    <form action="/api/carts/add-product" method="POST">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card card-custom">
+        <div class="card-header">
+          <h3 class="card-title">{{this.title}}</h3>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Descripción: {{description}}</p>
+          <p class="card-text">Precio: {{price}}</p>
+          <p class="card-text">Stock: {{stock}}</p>
+          <p class="card-text">Categoría: {{category}}</p>
+          <!-- Agregar al carrito -->
+
+          {{!-- <form action="/api/carts/add-product" method="POST">
                         <input type="hidden" name="product_id" value="{{ product._id }}">
                         <button type="submit" class="btn btn-primary">Agregar al carrito</button>
-                    </form>
-                </div>
-            </div>
+                    </form> --}}
+
+          <form action="/api/carts/{{cartId}}/add-product" method="POST">
+            <input type="hidden" name="product_id" value="{{this._id}}" />
+            <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>

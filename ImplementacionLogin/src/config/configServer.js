@@ -19,4 +19,10 @@ dotenv.config({
 export default {
     port: process.env.SERVER_PORT,
     mongoURL: process.env.MONGO_URL,
+    gmailAccount: process.env.GMAIL_ACCOUNT,
+    gmailPassword: process.env.GMAIL_APP_PASSW,
+    twilioAccountSID: process.env.TWILIO_ACCOUNT_SID,
+    twilioAuthToken: process.env.TWILIO_AUTH_TOKEN,
+    twilioSMSNUmber: process.env.TWILIO_SMS_NUMBER,
+    twilioWhatsappNumber: process.env.TWILIO_TO_SMS_NUMBER
 }

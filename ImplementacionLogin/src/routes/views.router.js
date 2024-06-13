@@ -1,6 +1,7 @@
 import express from "express"
 import { authToken, passportCall } from "../../utils.js"
 import passport from "passport"
+import { renderCart } from "../controlers/cartsController/cart.controller.js"
 
 
 const router = express.Router()
@@ -30,6 +31,7 @@ router.get('/logout', (req, res) => {
     })
 })
 
+router.get('/cart', passportCall('jwt'), renderCart)
 
 /* router.get('/',
     passport.authenticate('jwt', { session: false }),

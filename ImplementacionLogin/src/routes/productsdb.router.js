@@ -1,5 +1,5 @@
 import { Router } from "express"
-import productsDAO from '../dao/mongodb/productsDAO.js'
+import productsDAO from '../services/dao/mongodb/productsDAO.js'
 import { authenticateUser } from "../config/authUtils.js"
 import passport from "passport"
 

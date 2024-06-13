@@ -1,4 +1,4 @@
-import { getProductsFromFile, saveProductsToFile } from '../../models/modelsFilesystem/products.model.js'
+import { getProductsFromFile, saveProductsToFile } from '../../../models/modelsFilesystem/products.model.js'
 
 class ProductDaoFilesystem {
     async getAllProducts() {

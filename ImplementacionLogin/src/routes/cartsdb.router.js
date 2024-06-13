@@ -1,5 +1,5 @@
 import { Router } from "express"
-import cartsDAO from '../dao/mongodb/cartsDAO.js'
+import cartsDAO from '../services/dao/mongodb/cartsDAO.js'
 
 const cartsdbRouter = Router()
 const cartsDaoInstance = new cartsDAO()

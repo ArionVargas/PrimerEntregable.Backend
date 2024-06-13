@@ -1,6 +1,7 @@
 import express from 'express'
 import passport from 'passport'
 import { generateJWToken } from '../../utils.js'
+import { registerUser,loginUser } from '../controlers/auth.controller.js'
 
 const authRouter = express.Router()
 
@@ -23,7 +24,7 @@ authRouter.get('/githubcallback', passport.authenticate('github', { failureRedir
 
 })
 
-authRouter.post("/register", passport.authenticate('register', {
+/* authRouter.post("/register", passport.authenticate('register', {
     session: false,
     successRedirect: '/login',
     failureRedirect: '/signup',
@@ -39,7 +40,7 @@ authRouter.post("/login", passport.authenticate('login', {
     const access_token = generateJWToken(user)
     console.log('sigo en auth')
     console.log(access_token)
-    /* res.send({access_token: access_token}) */
+    
     console.log('Setting jwtCookieToken cookie')
     res.cookie('jwtCookieToken', access_token, {
         maxAge: 60000,
@@ -50,8 +51,11 @@ authRouter.post("/login", passport.authenticate('login', {
     res.status(200).json({ status: 'success', user })
 
 }
-)
+) */
 
+authRouter.post("/register", registerUser);
+
+authRouter.post("/login", loginUser);
 
 authRouter.post('/logout', (req, res) => {
     req.session.destroy(error => {

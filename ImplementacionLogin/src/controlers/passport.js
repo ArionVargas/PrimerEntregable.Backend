@@ -2,13 +2,15 @@ import passport from "passport"
 import passportLocal from "passport-local"
 import GitHubStrategy from 'passport-github2'
 import jwtStrategy from 'passport-jwt'
-import UsersDAO from '../dao/mongodb/usersDAO.js'
+import UsersDAO from '../services/dao/mongodb/usersDAO.js'
 import { createHash, isValidPassword, PRIVATE_KEY } from '../../utils.js'
+import CartsDAO from '../services/dao/mongodb/cartsDAO.js'
 
 const JwtStrategy = jwtStrategy.Strategy
 const ExtractJWT = jwtStrategy.ExtractJwt
 const localStrategy = passportLocal.Strategy
 const usersDaoInstance = new UsersDAO()
+const cartsDaoInstance = new CartsDAO()
 
 const initializePassport = () => {
 
@@ -83,6 +85,10 @@ const initializePassport = () => {
                 }
 
                 const result = await usersDaoInstance.createUser(newUser)
+                
+                const cart = await cartsDaoInstance.addCart({ user_id: result._id, products: [] })
+                req.session.cartId = cart._id
+                
                 return done(null, result)
             } catch (error) {
                 return done('Error registrando usuario: ' + error)
