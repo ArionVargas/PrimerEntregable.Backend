@@ -35,8 +35,13 @@ class CartDao {
   }
 
   async addCart(cart) {
+    console.log('en_addCart')
+    console.log(cart);
     try {
-      return await cartsModel.create(cart)
+      const result = await cartsModel.create(cart)
+      console.log('saliendo_de_addCart')
+      console.log(result)
+      return result
     } catch (error) {
       console.error('Error al agregar un carrito:', error)
       return null
@@ -52,24 +57,33 @@ class CartDao {
     }
   }
 
-  async addProductCart(cartId, productId) {
+  async addProductCart(cartId, product_id) {
     try {
       const cart = await cartsModel.findById(cartId)
       if (!cart) {
         throw new Error('Carrito no encontrado')
       }
       // Verifica si el producto ya está en el carrito
-      const productIndex = cart.products.findIndex(product => product.product_id.toString() === productId)
+      const productIndex = cart.products.findIndex(product => product.product_id.toString() === product_id)
       if (productIndex !== -1) {
         // Si el producto ya está en el carrito, puedes incrementar la cantidad o manejarlo según tu lógica
         cart.products[productIndex].quantity += 1
       } else {
         // Si el producto no está en el carrito, añádelo
-        cart.products.push({ productId, quantity: 1 })
+        cart.products.push({ product_id, quantity: 1 })
       }
       await cart.save()
     } catch (err) {
       throw new Error(`Error al agregar producto al carrito: ${err.message}`)
+    }
+  }
+
+  async getCartByUserId(userId) {
+    try {
+      return await cartsModel.findOne({ user: userId })
+    } catch (error) {
+      console.error('Error al obtener el carrito por ID de usuario:', error)
+      return null
     }
   }
 

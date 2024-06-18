@@ -39,9 +39,15 @@ cartsdbRouter.post('/', async (req, res) => {
 cartsdbRouter.post('/:cartId/add-product', async (req, res) => {
   try {
     const { product_id } = req.body
+    console.log(product_id);
     const { cartId } = req.params
+    console.log(cartId);
     await cartsDaoInstance.addProductCart(cartId, product_id)
-    res.json({ message: 'Producto agregado al carrito con éxito' })
+
+    /* res.json({ message: 'Producto agregado al carrito con éxito' }) */
+    //====> reaizar una alerta de esto <===//
+
+    res.render("productsdb")
   } catch (err) {
     res.status(400).json({ message: err.message })
   }

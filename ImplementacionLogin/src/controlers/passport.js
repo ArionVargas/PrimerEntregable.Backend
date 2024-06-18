@@ -20,12 +20,12 @@ const initializePassport = () => {
             secretOrKey: PRIVATE_KEY
         },
         async (jwt_payload, done) => {
-            console.log("entrando a passport strategy con JWT")
+          
             try {
-                console.log("jwt obtenido del payload")
-                console.log(jwt_payload)
+              
+               
                 const user = await usersDaoInstance.getUserById(jwt_payload.user._id)
-                console.log(user)
+              
                 if (!user) {
                     return done(null, false)
                 }
@@ -86,8 +86,10 @@ const initializePassport = () => {
 
                 const result = await usersDaoInstance.createUser(newUser)
                 
-                const cart = await cartsDaoInstance.addCart({ user_id: result._id, products: [] })
-                req.session.cartId = cart._id
+               /*  const cart = await cartsDaoInstance.addCart({ user: result._id, products: [] })
+                result.carts = cart._id
+                await result.save() */
+                /* req.session.cartId = cart._id */
                 
                 return done(null, result)
             } catch (error) {
@@ -104,7 +106,7 @@ const initializePassport = () => {
             try {
                 const user = await usersDaoInstance.getUserByEmail(email)
                 if (!user) {
-                    console.warn('Usuario no encontrado en passport.js');
+                    console.warn('Usuario no encontrado en passport.js')
                     return done(null, false, { message: 'Usuario o contraseña inválidos' })
                 }
 

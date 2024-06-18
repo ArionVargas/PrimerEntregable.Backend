@@ -1,6 +1,24 @@
 import userModel from '../../models/modelsMongo/users.model.js'
 
 class UsersDAO {
+
+    async addCartToUser(userId, cartId) {
+        try {
+            const user = await userModel.findById(userId)
+            if (!user) {
+                throw new Error('Usuario no encontrado')
+            }
+
+            user.carts.push({ cart: cartId })
+            await user.save()
+
+            return true
+        } catch (error) {
+            console.error('Error al agregar carrito al usuario:', error)
+            return false
+        }
+    }
+
     async getUserByEmail(email) {
         try {
             return await userModel.findOne({ email })

@@ -2,7 +2,8 @@
 import UsersDAO from '../services/dao/mongodb/usersDAO.js'
 import CartDao from '../services/dao/mongodb/cartsDAO.js'
 import { createHash, isValidPassword } from '../../utils.js'
-/* import passport from 'passport'; */
+import passport from 'passport'
+import {generateJWToken} from '../../utils.js'
 
 const usersDaoInstance = new UsersDAO()
 const cartsDaoInstance = new CartDao()
@@ -17,15 +18,9 @@ export const registerUser = async (req, res, next) => {
         }
 
         try {
-            // Crear carrito para el nuevo usuario
-            const cart = await cartsDaoInstance.addCart({ user_id: user._id, products: [] })
-            req.session.cartId = cart._id
-
-            /* const accessToken = generateJWToken(user);
-            res.cookie('jwtCookieToken', accessToken, {
-                maxAge: 60000,
-                httpOnly: true,
-            }); */
+            const cart = await cartsDaoInstance.addCart({ user: user._id, products: [] })
+            user.cart.push(cart._id)
+            await user.save()
 
             return res.status(201).send('Usuario registrado con éxito')
         } catch (error) {
@@ -52,9 +47,13 @@ export const loginUser = async (req, res, next) => {
 
             let cart = await cartsDaoInstance.getCartByUserId(user._id)
             if (!cart) {
-                cart = await cartsDaoInstance.addCart({ user_id: user._id, products: [] })
+
+                cart = await cartsDaoInstance.addCart({ user: user._id, products: [] })
+                user.cart = cart._id
+                await user.save()
             }
             req.session.cartId = cart._id
+
 
             const accessToken = generateJWToken(user)
             res.cookie('jwtCookieToken', accessToken, {

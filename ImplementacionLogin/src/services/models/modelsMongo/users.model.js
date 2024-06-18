@@ -1,7 +1,5 @@
 import mongoose from "mongoose"
 
-
-
 const userCollection = 'users'
 
 const userSchema = new mongoose.Schema({
@@ -14,16 +12,14 @@ const userSchema = new mongoose.Schema({
         default: "user",
         enum: ["user","admin"]
     },
-    carts: {
+    cart: {
         type: [
             {
-                cart: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'carts'
-                }
-
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'carts'
             }
-        ], default:[]
+        ], 
+        default: []
     }
 })
 
