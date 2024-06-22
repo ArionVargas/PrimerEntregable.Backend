@@ -33,15 +33,4 @@ router.get('/logout', (req, res) => {
 
 router.get('/cart', passportCall('jwt'), renderCart)
 
-/* router.get('/',
-    passport.authenticate('jwt', { session: false }),
-    (req, res) => {
-
-        res.send('api/prodcutsdb', {
-            user: req.user
-        })
-    })
- */
-
-
 export default router

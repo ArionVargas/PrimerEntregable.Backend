@@ -1,50 +1,10 @@
-// productsdb.router.js
-import { Router } from "express"
-import passport from "passport"
-import { 
-  obtenerProductos, 
-  crearProducto, 
-  obtenerProductoPorId, 
-  actualizarProducto, 
-  eliminarProducto 
-} from "../controlers/productsController/productsController.js"
+// controllers/productsController.js
+import productsDAO from '../../services/dao/mongodb/productsDAO.js'
 
-const productsdbRouter = Router()
-
-// GET
-productsdbRouter.get('/', passport.authenticate('jwt', { session: false }), obtenerProductos)
-
-// POST
-productsdbRouter.post("/", crearProducto)
-
-// GET de detalle producto por id
-productsdbRouter.get('/:id', passport.authenticate('jwt', { session: false }), obtenerProductoPorId)
-
-// PUT
-productsdbRouter.put("/:id", actualizarProducto)
-
-// DELETE
-productsdbRouter.delete("/:id", eliminarProducto)
-
-export default productsdbRouter
-
-
-
-
-
-
-/* import { Router } from "express"
-import productsDAO from '../services/dao/mongodb/productsDAO.js'
-import { authenticateUser } from "../config/authUtils.js"
-import passport from "passport"
-
-const productsdbRouter = Router()
 const productsDaoInstance = new productsDAO()
 
-
-// GET
-
-productsdbRouter.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+// Obtener todos los productos
+export const obtenerProductos = async (req, res) => {
     try {
         const { page = 1, limit = 10, sort = 'asc' } = req.query
         const user = req.user
@@ -72,16 +32,15 @@ productsdbRouter.get('/', passport.authenticate('jwt', { session: false }), asyn
             hasNextPage,
             prevLink,
             nextLink
-        });
+        })
     } catch (error) {
-        console.error('Error al obtener productos:', error);
-        res.status(500).send('Error interno del servidor');
+        console.error('Error al obtener productos:', error)
+        res.status(500).send('Error interno del servidor')
     }
-})
+}
 
-
-// POST
-productsdbRouter.post("/", async (req, res) => {
+// Crear producto nuevo 
+export const crearProducto = async (req, res) => {
     try {
         const newProduct = await productsDaoInstance.addProduct(req.body)
         res.status(201).json(newProduct)
@@ -89,33 +48,29 @@ productsdbRouter.post("/", async (req, res) => {
         console.error("Error al crear un nuevo producto:", error)
         res.status(500).send("Error interno del servidor")
     }
-})
+}
 
-// GET de detalle producto por id
-
-productsdbRouter.get('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+// Obetener producto por id
+export const obtenerProductoPorId = async (req, res) => {
     try {
-      const productId = req.params.id;
-      const product = await productsDaoInstance.getProductById(productId);
-  
-      if (!product) {
-        return res.status(404).send('Producto no encontrado');
-      }
-      const user = req.user;
-      const cartId = user && user.cart ? user.cart[0] : null; // Asegúrate de obtener el ID del carrito
-      console.log(cartId);
-  
-      res.render('productDetail', { ...product.toObject(), cartId }); // Aquí se pasa el product y el cartId a la vista
+        const productId = req.params.id
+        const product = await productsDaoInstance.getProductById(productId)
+    
+        if (!product) {
+            return res.status(404).send('Producto no encontrado')
+        }
+        const user = req.user
+        const cartId = user && user.cart ? user.cart[0] : null 
+    
+        res.render('productDetail', { ...product.toObject(), cartId }) 
     } catch (error) {
-      console.error('Error al obtener detalles del producto:', error);
-      res.status(500).send('Error interno del servidor');
+        console.error('Error al obtener detalles del producto:', error)
+        res.status(500).send('Error interno del servidor')
     }
-  })
+}
 
-
-
-// PUT
-productsdbRouter.put("/:id", async (req, res) => {
+// Atualizar producto
+export const actualizarProducto = async (req, res) => {
     try {
         const productId = req.params.id
         const updatedProduct = await productsDaoInstance.updateProduct(productId, req.body)
@@ -127,10 +82,10 @@ productsdbRouter.put("/:id", async (req, res) => {
         console.error("Error al actualizar el producto:", error)
         res.status(500).send("Error interno del servidor")
     }
-})
+}
 
-// DELETE
-productsdbRouter.delete("/:id", async (req, res) => {
+// Eliminar producto
+export const eliminarProducto = async (req, res) => {
     try {
         const productId = req.params.id
         const deletedProduct = await productsDaoInstance.deleteProduct(productId)
@@ -142,7 +97,4 @@ productsdbRouter.delete("/:id", async (req, res) => {
         console.error("Error al eliminar el producto:", error)
         res.status(500).send("Error interno del servidor")
     }
-})
-
-export default productsdbRouter
- */
+}

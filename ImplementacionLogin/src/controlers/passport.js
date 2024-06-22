@@ -139,14 +139,13 @@ const initializePassport = () => {
 
 export const cookieExtractor = req => {
     try {
-        console.log('encokkieExtractor')
+        
         let token = null;
         if (req && req.cookies) {
-            console.log("Cookies recibidas en cookieExtractor:")
-            console.log(req.cookies)
+    
             token = req.cookies["jwtCookieToken"]
         }
-        console.log('Cookie jwtCookieToken extracted:', token)
+        
         return token
     } catch (error) {
         console.error("Error al extraer la cookie:", error)

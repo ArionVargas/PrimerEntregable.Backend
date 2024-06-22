@@ -24,38 +24,9 @@ authRouter.get('/githubcallback', passport.authenticate('github', { failureRedir
 
 })
 
-/* authRouter.post("/register", passport.authenticate('register', {
-    session: false,
-    successRedirect: '/login',
-    failureRedirect: '/signup',
-}))
+authRouter.post("/register", registerUser)
 
-authRouter.post("/login", passport.authenticate('login', {
-    failureRedirect: '/login'
-}), async (req, res) => {
-    const user = req.user
-    console.log('en authrouter user...')
-    console.log(user)
-    if (!user) return res.status(401).send({ status: "error", error: "Las Credenciales son incorrectos" })
-    const access_token = generateJWToken(user)
-    console.log('sigo en auth')
-    console.log(access_token)
-    
-    console.log('Setting jwtCookieToken cookie')
-    res.cookie('jwtCookieToken', access_token, {
-        maxAge: 60000,
-        httpOnly: false
-    })
-    console.log('Setting jwtCookieToken cookie')
-    console.log('salgo de auth')
-    res.status(200).json({ status: 'success', user })
-
-}
-) */
-
-authRouter.post("/register", registerUser);
-
-authRouter.post("/login", loginUser);
+authRouter.post("/login", loginUser)
 
 authRouter.post('/logout', (req, res) => {
     req.session.destroy(error => {

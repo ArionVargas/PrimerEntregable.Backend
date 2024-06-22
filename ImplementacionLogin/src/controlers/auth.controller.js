@@ -47,10 +47,15 @@ export const loginUser = async (req, res, next) => {
 
             let cart = await cartsDaoInstance.getCartByUserId(user._id)
             if (!cart) {
-
-                cart = await cartsDaoInstance.addCart({ user: user._id, products: [] })
-                user.cart = cart._id
+                cart = await cartsDaoInstance.newCart()  // Crear un nuevo carrito si no existe
+                if (!mongoose.Types.ObjectId.isValid(cart._id)) {
+                    return res.status(500).send('Error al crear el carrito')
+                }
+                user.cart = [cart._id]
                 await user.save()
+            } else {
+                // Asegúrate de que user.cart sea un array
+                user.cart = [cart._id]
             }
             req.session.cartId = cart._id
 
@@ -60,7 +65,6 @@ export const loginUser = async (req, res, next) => {
                 maxAge: 60000,
                 httpOnly: true,
             })
-
             return res.status(200).json({ status: 'success', user })
         })
     })(req, res, next)

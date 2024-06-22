@@ -1,67 +1,39 @@
+import passport from "passport"
 import { Router } from "express"
-import cartsDAO from '../services/dao/mongodb/cartsDAO.js'
+import { 
+    getCarts, 
+    getCartById, 
+    createCart, 
+    addProductToCart, 
+    deleteProductFromCart,
+    completePurchase,
+    getUserCart
+} from "../controlers/cartsController/cartsdbController.js"
 
 const cartsdbRouter = Router()
-const cartsDaoInstance = new cartsDAO()
+
+
+cartsdbRouter.get('/cart', passport.authenticate('jwt', { session: false }), getUserCart)
 
 // Obtener todos los carritos
-cartsdbRouter.get('/', async (req, res) => {
-  try {
-    const carts = await cartsDaoInstance.getCarts()
-    res.json(carts)
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-})
+cartsdbRouter.get('/', getCarts)
 
 // Obtener un carrito específico por su ID
-cartsdbRouter.get('/:id', async (req, res) => {
-  try {
-    const cartProducts = await cartsDaoInstance.getCartWithProducts(req.params.id)
-    res.json(cartProducts)
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-})
+cartsdbRouter.get('/:id', getCartById)
 
 // Crear un nuevo carrito
-cartsdbRouter.post('/', async (req, res) => {
-  try {
-    const newCart = await cartsDaoInstance.newCart()
-    res.status(201).json(newCart)
-  } catch (err) {
-    res.status(400).json({ message: err.message })
-  }
-})
+cartsdbRouter.post('/', createCart)
 
 // Añadir un producto a un carrito
+cartsdbRouter.post('/:cartId/add-product', addProductToCart)
 
-cartsdbRouter.post('/:cartId/add-product', async (req, res) => {
-  try {
-    const { product_id } = req.body
-    console.log(product_id);
-    const { cartId } = req.params
-    console.log(cartId);
-    await cartsDaoInstance.addProductCart(cartId, product_id)
+// Completar la compra y generar un ticket
+cartsdbRouter.post('/:cartId/complete-purchase', passport.authenticate('jwt', { session: false }), completePurchase)
 
-    /* res.json({ message: 'Producto agregado al carrito con éxito' }) */
-    //====> reaizar una alerta de esto <===//
+// Eliminar producto del carrito por ID
+cartsdbRouter.delete('/:cid/products/:pid', deleteProductFromCart)
 
-    res.render("productsdb")
-  } catch (err) {
-    res.status(400).json({ message: err.message })
-  }
-})
 
-//Eliminar producto del carrito por ID
-cartsdbRouter.delete('/:cid/products/:pid', async (req, res) => {
-  try {
-    const { cid, pid } = req.params
-    await cartsDaoInstance.deleteProductFromCart(cid, pid)
-    res.json({ message: 'Producto eliminado del carrito con éxito' })
-  } catch (err) {
-    res.status(400).json({ message: err.message })
-  }
-})
 
 export default cartsdbRouter
+

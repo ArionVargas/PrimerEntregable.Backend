@@ -3,10 +3,6 @@ import userModel from "../services/models/modelsMongo/users.model.js"
 
 const usersRouter = Router()
 
-//GET
-
-
-//POST
 usersRouter.post('/', async (req, res) => {
     try {
         let { name, last_name, email, age } = req.body
@@ -19,9 +15,6 @@ usersRouter.post('/', async (req, res) => {
     }
 
 })
-
-
-//PUT
 
 usersRouter.put('/:id', async (req, res) => {
     try {
@@ -36,8 +29,6 @@ usersRouter.put('/:id', async (req, res) => {
 
 })
 
-
-//DELETE
 
 usersRouter.delete('/:id', async (req, res) => {
     try {

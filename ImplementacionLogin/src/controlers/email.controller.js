@@ -35,6 +35,27 @@ const mailOptions = {
     }]
 }
 
+export const sendEmailWithTicket = async (to, ticket) => {
+    try {
+        const mailOptions = {
+            from: "Test " + config.gmailAccount,
+            to: to,
+            subject: "Pedido realizado",
+            html: `<div>
+                <h2>Gracias por su compra, su pedido es el número ${ticket.code}</h2>
+                <p>Monto total: ${ticket.amount}</p>
+                <p>Fecha de compra: ${ticket.purchase_datetime}</p>
+                <p>Comprador: ${ticket.purchaser}</p>
+            </div>`,
+        }
+
+        await transporter.sendMail(mailOptions)
+        console.log('Ticket enviado a: %s', to)
+    } catch (error) {
+        console.error('Error al enviar el ticket:', error)
+    }
+}
+
 export const sendEmail = (req, res) => {
     try {
         transporter.sendMail(mailOptions, (error, info) => {

@@ -15,6 +15,7 @@ import MongoSingleton from "./config/mongodbSingleton.js"
 import cookieParser from "cookie-parser"
 import emailRouter from './routes/email.router.js'
 import smsRouter from './routes/sms.router.js'
+import ticketsRouter from "./routes/ticket.router.js"
 
 
 const app = express()
@@ -54,6 +55,7 @@ app.use("/api/users", usersRouter)
 app.use("/api/products", productsdbRouter)
 app.use("/api/carts", cartsdbRouter)
 app.use("/api", authRouter)
+app.use("/api/tickets", ticketsRouter)
 app.use("/", router)
 app.use("/api/email", emailRouter)
 app.use('/api/sms', smsRouter)
