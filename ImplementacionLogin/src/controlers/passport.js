@@ -20,12 +20,12 @@ const initializePassport = () => {
             secretOrKey: PRIVATE_KEY
         },
         async (jwt_payload, done) => {
-          
+
             try {
-              
-               
+
+
                 const user = await usersDaoInstance.getUserById(jwt_payload.user._id)
-              
+
                 if (!user) {
                     return done(null, false)
                 }
@@ -71,6 +71,7 @@ const initializePassport = () => {
         async (req, username, password, done) => {
             try {
                 const { firstName, lastName, email } = req.body
+
                 const exist = await usersDaoInstance.getUserByEmail(email)
 
                 if (exist) {
@@ -85,12 +86,7 @@ const initializePassport = () => {
                 }
 
                 const result = await usersDaoInstance.createUser(newUser)
-                
-               /*  const cart = await cartsDaoInstance.addCart({ user: result._id, products: [] })
-                result.carts = cart._id
-                await result.save() */
-                /* req.session.cartId = cart._id */
-                
+
                 return done(null, result)
             } catch (error) {
                 return done('Error registrando usuario: ' + error)
@@ -139,13 +135,13 @@ const initializePassport = () => {
 
 export const cookieExtractor = req => {
     try {
-        
+
         let token = null;
         if (req && req.cookies) {
-    
+
             token = req.cookies["jwtCookieToken"]
         }
-        
+
         return token
     } catch (error) {
         console.error("Error al extraer la cookie:", error)

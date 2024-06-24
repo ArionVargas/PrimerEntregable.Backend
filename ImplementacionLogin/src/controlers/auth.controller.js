@@ -27,7 +27,7 @@ export const registerUser = async (req, res, next) => {
             return res.status(500).send('Error registrando usuario: ' + error.message)
         }
     })(req, res, next)
-};
+}
 
 export const loginUser = async (req, res, next) => {
     passport.authenticate('login', async (err, user, info) => {

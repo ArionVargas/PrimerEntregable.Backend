@@ -17,7 +17,6 @@ import emailRouter from './routes/email.router.js'
 import smsRouter from './routes/sms.router.js'
 import ticketsRouter from "./routes/ticket.router.js"
 
-
 const app = express()
 
 app.use(express.json())
@@ -48,8 +47,6 @@ app.use(session(
     }
 ))
 
-
-
 //MongoDB
 app.use("/api/users", usersRouter)
 app.use("/api/products", productsdbRouter)
@@ -59,6 +56,7 @@ app.use("/api/tickets", ticketsRouter)
 app.use("/", router)
 app.use("/api/email", emailRouter)
 app.use('/api/sms', smsRouter)
+
 
 const PORT = config.port
 

@@ -3,6 +3,8 @@ import passport from 'passport'
 import { generateJWToken } from '../../utils.js'
 import { registerUser,loginUser } from '../controlers/auth.controller.js'
 
+
+
 const authRouter = express.Router()
 
 authRouter.get('/github', passport.authenticate('github', { scope: ['user:email'] }), (req, res) => {
@@ -37,5 +39,6 @@ authRouter.post('/logout', (req, res) => {
         }
     })
 })
+
 
 export default authRouter
