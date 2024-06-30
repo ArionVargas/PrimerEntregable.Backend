@@ -1,0 +1,114 @@
+{{#if isValid}}
+    <header>
+        <div class="header-left">
+           <span>Bienvenido/a {{firstName}}</span>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                
+                <form action="/api/logout" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                </form>
+                <div class="cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                    </svg>
+                    <a href="http://localhost:8080/api/carts/cart" class="bi bi-cart" id="cart-icon">Carrito (<span id="cart-count">{{cartCount}}</span>)</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-6">
+        <div class="row justify-content-center">
+            {{#each products}}
+            <div class="col-md-4 mb-4">
+                <div class="card card-custom">
+                    <div class="card-header">Producto</div>
+                    <div class="card-body">
+                        <p>{{this.img}}</p>
+                        <p class="card-title">TITULO: {{this.title}}</p>
+                        <p class="card-text">Precio: {{price}}</p>
+                        <p>Stock: {{this.stock}}</p>
+                        <p>Categoria: {{this.category}}</p>
+                        <a href="http://localhost:8080/api/products/{{this._id}}" class="btn btn-primary">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <br/>
+    <div class="pagination">
+        {{#if hasPrevPage}}
+        <a class="btn btn-primary" href="{{prevLink}}"><= Anterior</a>
+        {{/if}}
+        &nbsp;
+        {{currentPage}}
+        &nbsp;
+        {{#if hasNextPage}}
+        <a class="btn btn-primary" href="{{nextLink}}">Siguiente =></a>
+        {{/if}}
+    </div>
+
+    <!-- Modal del carrito -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Tu carrito</h2>
+            <div id="cart-items"></div>
+            <button id="checkout-button" class="btn btn-primary">Finalizar compra</button>
+        </div>
+    </div>
+
+    <script src="../public/js/cart.js"></script>
+    {{else}}
+    <h1>Pagina no corresponde en Productsdb.hand</h1>
+    {{/if}}
+
+{{!-- 
+{{#if isValid}}
+<div>
+
+<div>
+    <h2>Bienvenido/a {{firstName}}</h2>
+    <form action="/api/logout" method="post">
+        <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
+</div>
+<div class="container mt-6">
+    <div class="row justify-content-center">
+        {{#each products}}
+        <div class="col-md-4 mb-4">
+            <div class="card card-custom">
+                <div class="card-header">Producto</div>
+                <div class="card-body">
+                    <p>{{this.img}}</p>
+                    <p class="card-title">TITULO: {{this.title}}</p>
+                    <p class="card-text">Precio: {{price}}</p>
+                    <p>Stock: {{this.stock}}</p>
+                    <p>Categoria: {{this.category}}</p>
+                    <a href="http://localhost:8080/api/products/{{this._id}}" class="btn btn-primary">Ver detalles</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<br/>
+<div class="pagination">
+    {{#if hasPrevPage}}
+    <a class="btn btn-primary" href="{{prevLink}}"><= Anterior</a>
+    {{/if}}
+    &nbsp;
+    {{currentPage}}
+    &nbsp;
+    {{#if hasNextPage}}
+    <a class="btn btn-primary" href="{{nextLink}}">Siguiente =></a>
+    {{/if}}
+</div>
+</div>
+{{else}}
+<h1>Pagina no corresponde en Productsdb.hand</h1>
+{{/if}}
+ --}}

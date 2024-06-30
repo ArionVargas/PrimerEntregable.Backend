@@ -1,0 +1,130 @@
+[{
+    "_id": {
+      "$oid": "65fb322b92d418d492d61edd"
+    },
+    "title": "Zapatillas de running",
+    "description": "Zapatillas deportivas diseñadas para correr",
+    "price": 79.99,
+    "img": "/img/zapatillas_running.jpg",
+    "code": "cod1",
+    "stock": 50,
+    "status": true,
+    "category": "Deportes"
+  },
+  {
+    "_id": {
+      "$oid": "65fb322b92d418d492d61ede"
+    },
+    "title": "Balón de fútbol",
+    "description": "Balón de fútbol oficial de tamaño estándar",
+    "price": 24.99,
+    "img": "/img/balon_futbol.jpg",
+    "code": "cod2",
+    "stock": 30,
+    "status": true,
+    "category": "Deportes"
+  },
+  {
+    "_id": {
+      "$oid": "65fb322b92d418d492d61edf"
+    },
+    "title": "Raqueta de tenis",
+    "description": "Raqueta de tenis profesional para jugadores avanzados",
+    "price": 129.99,
+    "img": "/img/raqueta_tenis.jpg",
+    "code": "cod3",
+    "stock": 20,
+    "status": true,
+    "category": "Deportes"
+  },
+  {
+    "_id": {
+      "$oid": "65fb322b92d418d492d61ee0"
+    },
+    "title": "Bicicleta de montaña",
+    "description": "Bicicleta de montaña resistente para aventuras al aire libre",
+    "price": 499.99,
+    "img": "/img/bicicleta.jpg",
+    "code": "cod4",
+    "stock": 8,
+    "status": true,
+    "category": "Deportes"
+  },
+  {
+    "_id": {
+      "$oid": "65fb322b92d418d492d61ee1"
+    },
+    "title": "Balón de baloncesto",
+    "description": "Balón de baloncesto oficial para partidos y entrenamientos",
+    "price": 29.99,
+    "img": "/img/balon_baloncesto.jpg",
+    "code": "cod5",
+    "stock": 40,
+    "status": true,
+    "category": "Deportes"
+  },
+  {
+    "_id": {
+      "$oid": "65fb322b92d418d492d61ee2"
+    },
+    "title": "Guantes de boxeo",
+    "description": "Guantes de boxeo profesionales para entrenamientos y competiciones",
+    "price": 89.99,
+    "img": "/img/guantes_boxeo.jpg",
+    "code": "cod6",
+    "stock": 15,
+    "status": true,
+    "category": "Deportes"
+  },
+  {
+    "_id": {
+      "$oid": "65fb322b92d418d492d61ee3"
+    },
+    "title": "Tablero de dardos",
+    "description": "Tablero de dardos de calidad profesional",
+    "price": 49.99,
+    "img": "/img/tablero_dardos.jpg",
+    "code": "cod7",
+    "stock": 25,
+    "status": true,
+    "category": "Deportes"
+  },
+  {
+    "_id": {
+      "$oid": "65fb322b92d418d492d61ee4"
+    },
+    "title": "Gorra de béisbol",
+    "description": "Gorra de béisbol ajustable para proteger del sol durante los juegos",
+    "price": 19.99,
+    "img": "/img/gorra_beisbol.jpg",
+    "code": "cod8",
+    "stock": 35,
+    "status": true,
+    "category": "Deportes"
+  },
+  {
+    "_id": {
+      "$oid": "65fb322b92d418d492d61ee5"
+    },
+    "title": "Cuerda de saltar",
+    "description": "Cuerda de saltar resistente y ajustable para entrenamientos cardiovasculares",
+    "price": 9.99,
+    "img": "/img/cuerda_saltar.jpg",
+    "code": "cod9",
+    "stock": 50,
+    "status": true,
+    "category": "Deportes"
+  },
+  {
+    "_id": {
+      "$oid": "65fb322b92d418d492d61ee6"
+    },
+    "title": "Patines en línea",
+    "description": "Patines en línea ajustables para divertirse sobre ruedas",
+    "price": 59.99,
+    "img": "/img/patines.jpg",
+    "code": "cod10",
+    "stock": 20,
+    "status": true,
+    "category": "Deportes"
+  }]

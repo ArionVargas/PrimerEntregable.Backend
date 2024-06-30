@@ -1,0 +1,4 @@
+node_modules/
+IMPLEMENTACIONLOGIN/src/config/.env.development
+IMPLEMENTACIONLOGIN/src/config/.env.production
+.env
