@@ -18,6 +18,12 @@ import smsRouter from './routes/sms.router.js'
 import ticketsRouter from "./routes/ticket.router.js"
 import { addLogger } from './config/logger/loggerCustom.js'
 import loggerTestRouter from "./routes/loggerTest.router.js"
+import { cpus } from "os"
+import swaggerJSDoc from "swagger-jsdoc"
+import swaggerUIExpress from "swagger-ui-express"
+
+import cluster from 'cluster'
+import performanceRouter from "./routes/performanceTest.router.js"
 
 const app = express()
 
@@ -53,6 +59,22 @@ app.use(session(
 
 app.use(addLogger)
 
+//swagger
+const swaggerOptions = {
+    definition:{
+        openapi:"3.0.1",
+        info:{
+            title:'Documentacion de API Ecommerce',
+            description:'Documentacion para uso de swagger'
+        }
+    },
+    apis:['src/docs/**/*.yaml']
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
+
+app.use("/apidocs",swaggerUIExpress.serve, swaggerUIExpress.setup(specs))
+
 //MongoDB
 app.use("/api/users", usersRouter)
 app.use("/api/products", productsdbRouter)
@@ -64,8 +86,45 @@ app.use("/api/email", emailRouter)
 app.use('/api/sms', smsRouter)
 app.use('/loggerTest', loggerTestRouter)
 
+app.use('/api',performanceRouter)
 
-const PORT = config.port
+/* const PORT = config.port
+
+app.listen(PORT, (req, res) => {
+    console.log(`Server run on port: ${PORT}`)
+
+})
+
+
+// Singleton 
+
+const mongoInstance = async () => {
+    try {
+        await MongoSingleton.getInstance()
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+mongoInstance()
+ */
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
+
+
+console.log(cluster.isPrimary);
+
+if (cluster.isPrimary) {
+    console.log('soy un proceso primario y voy a delegar a un fork');
+    const numeroProcess = cpus().length
+    for (let i = 0; i < numeroProcess - 1; i++) {
+        cluster.fork()
+    }
+}else{
+    console.log('soy un worker');
+    console.log(process.pid);
+    const PORT = config.port
 
 app.listen(PORT, (req, res) => {
     console.log(`Server run on port: ${PORT}`)
@@ -85,8 +144,4 @@ const mongoInstance = async () => {
 
 mongoInstance()
 
-initializePassport()
-app.use(passport.initialize())
-app.use(passport.session())
-
-
+}

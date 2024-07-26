@@ -1,0 +1,71 @@
+paths:
+  /api/users/:
+    get:
+      summary: Obtener todos los usuarios.
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Operacion exitosa se retorno todos los usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/User'
+        '400':
+          description: Operacion fallida no se retorno todos los usuarios
+        '500':
+          description: Error inesperado en servidor
+  /api/users/{uid}:
+    get:
+      summary: Obtener un usuario por ID.
+      tags:
+        - Users
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: Id de usuario que desea obtener
+        schema:
+          $type: String
+      responses:
+        '200':
+          description: Operacion exitosa se retorno el usuario
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/User'
+        '400':
+          description: Operacion fallida no se retorno el usuario solicitado
+        '500':
+          description: Error inesperado en servidor
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id Utogenerado con MongoDB.
+        firstName:
+          type: String
+          description: Nombre del usuario
+        lastName:
+          type: String
+          description: Apellido del usuario
+        email:
+          type: String
+          description: Correo del usuario
+        password:
+          type: String
+          description: Contraseña del usuario
+      example:
+        _id: ObjectId("6656242fa12d737ac6adfb7b")
+        firstName: nombre usuario
+        lasName: apellido usuario
+        email: emailprueba@gmail.com
+        password: $2b$10$01ej8joCOjnc816CILt..OVmkN303LUDT1RNQYJMESrPhHQUoAxCS
+        role: user
