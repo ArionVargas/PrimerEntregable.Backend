@@ -1,0 +1,45 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtener todos los productos.
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Operacion exitosa se retorno todos los productos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Products'
+        '400':
+          description: Operacion fallida no se retorno todos los productos
+        '500':
+          description: Error inesperado en servidor
+  /api/products/{uid}:
+    get:
+      summary: Obtener un producto por ID.
+      tags:
+        - Products
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: Id de producto que desea obtener
+        schema:
+          $type: String
+      responses:
+        '200':
+          description: Operacion exitosa se retorno el producto
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Products'
+        '400':
+          description: Operacion fallida no se retorno el producto solicitado
+        '500':
+          description: Error inesperado en servidor
+  

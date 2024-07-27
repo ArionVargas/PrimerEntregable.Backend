@@ -1,0 +1,42 @@
+components:
+  schemas:
+    Products:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado con MongoDB.
+        title:
+          type: String
+          description: Titulo del producto
+        description:
+          type: String
+          description: Descripcion del producto
+        price:
+          type: Number
+          description: Precio del producto
+        img:
+          type: String
+          description: Imagen del producto
+        code:
+          type: String
+          description: codigo de producto
+        stock:
+          type: Number
+          description: stock del producto
+        status:
+          type: Boolean
+          description: Estado del producto por defecto true
+        category:
+          type: String
+          description: Categoria del producto
+      example:
+        _id: ObjectId("6656242fa12d737ac6adfb7b")
+        title: titulo ejemplo
+        description: descripcion del producto
+        price: 45
+        img: url img
+        code: codigo ejemplo
+        stock: 4
+        status: true
+        category: categoria ejemplo

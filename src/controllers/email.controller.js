@@ -36,6 +36,7 @@ const mailOptions = {
 }
 
 export const sendEmailWithTicket = async (to, ticket) => {
+
     try {
         const mailOptions = {
             from: "Test " + config.gmailAccount,

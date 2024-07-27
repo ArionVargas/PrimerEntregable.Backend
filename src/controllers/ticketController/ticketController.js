@@ -85,7 +85,7 @@ export const deleteTicket = async (req, res) => {
     try {
         const deletedTicket = await ticketsDaoInstance.deleteTicket(req.params.id)
         if (!deletedTicket) {
-            req.logger.warn(`Ticket no encontrado con id: ${req.params.id}`)
+            req.logger.warning(`Ticket no encontrado con id: ${req.params.id}`)
             return res.status(404).json({ message: 'Ticket no encontrado' })
         }
 
